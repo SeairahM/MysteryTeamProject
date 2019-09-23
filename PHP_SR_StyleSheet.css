@@ -1,3 +1,115 @@
+/* Header and Navigation*/
 header {
-	background-image: ""; 
+	background-image: url("images/headerimage.png"); 
+	background-size: 100% 100%;
+	margin: 0px;
+	height: 260px;
+	font: 27px calibri regular, sans-serif;
+	padding-bottom: 0px;
+}
+
+header img {
+	height: 60%;
+	width: 35%;
+	float: right;
+	padding-right: 10%;
+}
+
+header a{
+	float: left;
+	padding-top: 9.5%;
+	padding-left: 7%;
+	color: #00a651;
+	text-decoration: none;
+}
+
+a:hover{
+	color: #f26c4f;
+	text-shadow: 0 0 16px #f9ad81;
+}
+
+nav{
+	padding-right: 18.2%;
+	padding-top: 5px;
+	float: right;
+	clear: right;
+
+}
+
+nav ul{
+	list-style-type: none;
+	margin: 0;
+}
+
+nav li{
+	float: left;
+}
+
+nav li a {
+  display: block;
+  text-align: center;
+  padding: 16px;
+  text-decoration: none;
+}
+
+/* Body and Section formatting */
+body {
+	background-color: #ccf3da;
+	margin: 0;
+	align-items: center;
+}
+
+div {
+	display: block;
+	background-color: white;
+	box-shadow: 0px 5px 20px rgba(0, 0, 0, .5);
+	margin-left: 10%;
+	margin-right: 10%;
+	margin-top: 0px;
+	padding: 7px;
+}
+h1{
+	font: 47px impact, sans-serif;
+	color:#f9ad81;
+}
+h2{
+	font: 36px impact, sans-serif;
+	color:#f26c4f;
+}
+h3{
+	font: 25px calibri regular, sans-serif;
+	color:#00a651;
+}
+h4{
+	font: 25px calibri regular, sans-serif;
+}
+
+/* Footer formatting */
+footer p{
+	font: 11px calibri regular, sans-serif;
+	color: #00a651;
+	text-align: right;
+}
+
+footer section{
+	width: 48%;
+	display: -webkit-flex; /* Safari */
+	-webkit-flex-wrap: wrap; /* Safari 6.1+ */
+	display: flex;
+	flex-wrap: wrap;
+}
+
+footer ul{
+	list-style-type: none;
+	text-align: left;
+	float: right;
+}
+
+footer li{
+	float: left;
+	clear: none;
+}
+
+footer li a {
+  text-decoration: none;
 }
