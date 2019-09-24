@@ -24,6 +24,7 @@
     $DBPass = "MysteryTeam2019";
     $DB = "PHP";
 
+    //add die() if connection failed
     $conn = mysqli_connect($DBServer, $DBUser, $DBPass, $DB);
 
     if ($_GET["submit"] == "n" && isset($_POST["linesnum"])) {
@@ -54,15 +55,44 @@
       //inputs for sale record
       echo "<label for=\"paymethod\">Pay Method</label>";
       echo "<input type=\"text\" id=\"paymethod\" name=\"paymethod\" />";
+      echo "<input hidden type=\"text\" name=\"totalcost\" value=\"". $total. "\" />";
       //validation for datetime?
       echo "<label for=\"paymethod\">Date Sold</label>";
-      echo "<input type=\"text\" id=\"datetime\" name=\"datetime\" />";
-      echo "<p><a href=\"add_sales.php?edit=y\">Back to Add Sales Record</a></p>";
+      echo "<input type=\"text\" id=\"datetime\" name=\"datetime\" pattern=\"^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\" placeholder=\"YYYY-MM-DD\" />";
+      //prefill using localStorage via JS
+      echo "<p><a href=\"add_sales.php?\">Back to Add Sales Record</a></p>";
       echo "<input type=\"submit\" value=\"Submit Record\" />";
       echo "</form>";
     }
     elseif ($_GET["submit"] == "y") {
-
+      //insert sale record
+      $sql = "INSERT INTO SaleRecords (totalCost, payMethod, saleDate)
+      VALUES (\" + $_POST["totalcost"] + "\", \"" + $_POST["paymethod"] + "\", \" + $_POST["saleDate"] + "\")";
+      $result = $conn->query($sql);
+      mysqli_free_result($result);
+      echo "<p>Sale Record saved (incomplete).</p>";
+      //insert sale lines
+      $linesnum = $_POST['linesnum'];
+      $i = 0;
+      //get saleID of latest record
+      $sql = "SELECT saleID FROM SaleRecords ORDER BY saleID DESC LIMIT 1";
+      $result = $conn->query($sql);
+      $row = $result->fetch_assoc()
+      $saleID = $row["saleID"];
+      mysqli_free_result($result);
+      echo "<p>Sale ID is ". $saleID. ".</p>";
+      //insert sale line(s)
+      while ($i < $linesnum) {
+        $currentItemID = "itemline_" + $i;
+        $currentAmtID = "amtline_" + $i;
+        $sql = "INSERT INTO SaleLines (saleID, itemID, itemAmt)
+        VALUES (\" + $saleID + "\", \"" + $_POST[$currentItemID] + "\", \" + $_POST[$currentAmtID] + "\")";
+        $result = $conn->query($sql);
+        mysqli_free_result($result);
+        $i += 1;
+      }
+      echo "<p>". $i. " Sale Lines saved.</p>";
+      echo "<p>Sale Record saved (complete).</p>";
     }
   }
 ?>
