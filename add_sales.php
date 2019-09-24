@@ -24,16 +24,19 @@
   $conn = mysqli_connect($DBServer, $DBUser, $DBPass, $DB);
 
   //get lists of item names
-  $sql = "SELECT itemID, itemName, itemPrice FROM Items";
+  $sql = "SELECT itemID, itemName FROM Items";
   $result = $conn->query($sql);
   //input sales form
   echo "<form action=\"add_sales_process.php?submit=n\" method=\"POST\" id =\"form_process\"";
   echo "<input type=\"text\" name=\"Payment Method\" />";
+  //hidden input of sale lines no
+  echo "<input hidden type=\"text\" name=\"linesnum\" value=\"". $linesnum. "\" />";
   //iterate over lines of sales
   $i = 0;
   while ($i < $linesnum) {
     //select item from list
     $j = 0;
+    echo "<label for=\"itemline_". $i. "\">Item ID</label>";
     echo "<select name=\"itemID\" id=\"itemline_". $i. "\">";
     while ($j < $result->num_rows) {
     //1 itemID per option
@@ -43,6 +46,7 @@
       $j += 1;
     }
     echo "</select>";
+    echo "<label for=\"amtline_". $i. "\">Item Amount</label>";
     echo "<input type=\"text\" id=\"amtline_". $i. "\" name=\"itemAmount\" />";
     $i += 1;
     //redo query for additional sale lines
