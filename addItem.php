@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<meta name="description" content="Assignment 1" />
-	<meta name="keywords" content="assingment" />
-	<meta name="author" content="Apostolos Lafazanis" />
-	<!-- <link rel="stylesheet" 	 href="style.css" />			-- Linking CSS stylesheet-->
-	<title>Job Post Result</title>
+	<meta charset="utf-8"/>
+	<meta name="description" content="Great Pharmacy Stocktake"/>
+	<meta name="keywords" content="business"/>
+	<meta name="author" content="Mystery Team"/>
+	<link href="PHP_SR_StyleSheet.css" rel="stylesheet" />
 </head>
 <body>
 <?php 
 	$host = "localhost";				// Our host url
-	$user = "admin"; 					// Our user name
+	$user = "admin"; 				// Our user name
 	$pswd = "MysteryTeam2019"; 			// Our password 
-	$dbnm = "PHP"; 						// Our database name
+	$dbnm = "PHP"; 					// Our database name
 	
 	$conn = @mysqli_connect($host, $user, $pswd, $dbnm)
-				or die('Unable to connect to the server');
+		or die('Unable to connect to the server');
 				
 				
 	$itemName = $_POST["name"];
@@ -26,10 +25,10 @@
 	$itemPrice = $_POST["price"];
 	
 	$addItemQuery = "INSERT INTO Items (itemName, itemNode, itemCategory, stockAmt, itemPrice) 
-						VALUES($itemName, $itemNode, $itemCategory, $itemStock, $itemPrice)";
+			VALUES($itemName, $itemNode, $itemCategory, $itemStock, $itemPrice)";
 	
 	$displaySalesResults = @mysqli_query($conn, $addItemQuerys)		//Inserting the item into the database
-								or die('Couldnt add the item'); 
+				or die('Couldnt add the item'); 
 				
 	echo "<p>Item was added successfully!!!</p>";
 	
