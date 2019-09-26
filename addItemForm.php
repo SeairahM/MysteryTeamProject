@@ -10,6 +10,7 @@
 <body>
 	<h2>Add Item Page</h2>	
 	<p>Please enter the details of the item you would like to add below:</p>
+	
 	<form action = "addItem.php" method = "post">
 	<fieldset>
 		<legend>Item Details</legend>
@@ -20,31 +21,32 @@
 		<textarea name="note" rows="6" cols="30" maxlength="260" ></textarea><br> 
 		
 		<label>Category: </label>
+		
 		<?php
-		$host = "localhost";				// Our host url
-		$user = "admin"; 					// Our user name
-		$pswd = "MysteryTeam2019"; 			// Our password 
-		$dbnm = "PHP"; 						// Our database name
+			$host = "localhost";				// Our host url
+			$user = "admin"; 					// Our user name
+			$pswd = "MysteryTeam2019"; 			// Our password 
+			$dbnm = "PHP"; 						// Our database name
 	
-		$conn = @mysqli_connect($host, $user, $pswd, $dbnm)
-					or die('Unable to connect to the server');
+			$conn = @mysqli_connect($host, $user, $pswd, $dbnm)
+				or die('Unable to connect to the server');
 					
-		$getCategoryQuery = "SELECT categoryID, categoryName FROM Categories";
+			$getCategoryQuery = "SELECT categoryID, categoryName FROM Categories";
 	
-		$getCategoryResults = @mysqli_query($conn, $getCategoryQuery)		//Getting the category table from the database
-								or die('Couldnt get the category'); 
+			$getCategoryResults = @mysqli_query($conn, $getCategoryQuery)		//Getting the category table from the database
+						or die('Couldnt get the category'); 
 		
-		echo "<select name=\"category\" >";
-		echo "<option value=""> --- </option>";
+			echo "<select name=\"category\" >";
+			echo "<option value=""> --- </option>";
 		
-		while($category = mysqli_fetch_row($getCategoryResults))
-		{
-			echo "<option value=\"" . $category[0] . " \">" . $category[1] . "</option>";  //Creating the categories dynamically
-		}
+			while($category = mysqli_fetch_row($getCategoryResults))
+			{
+				echo "<option value=\"" . $category[0] . " \">" . $category[1] . "</option>";  //Creating the categories dynamically
+			}
 		
-		echo "</select><br>"
+			echo "</select><br>"
 		
-		mysqli_close($conn);  				//Closing connection
+			mysqli_close($conn);  				//Closing connection
 		?>
 		
 		<label>Stock: </label>
