@@ -25,14 +25,20 @@
    }
  }
 
+ function resetForm() {
+   localStorage.clear();
+ }
+
  function init() {
    if (localStorage.getItem("itemline_0")) {
      fillSaleLines();
    }
    var buttonNewLine = document.getElementById('button_new_line');
    var processForm1 = document.getElementById('form_process');
+   var buttonReset = document.getElementById("button_reset");
    buttonNewLine.onsubmit = saveSaleLines;
    processForm1.onsubmit = saveSaleLines;
+   buttonReset.onclick = resetForm;
  }
 
 window.onload = init;
