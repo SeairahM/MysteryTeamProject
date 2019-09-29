@@ -73,9 +73,17 @@
         echo "<label for=\"paymethod\">Pay Method</label>";
         echo "<input type=\"text\" id=\"paymethod\" name=\"paymethod\" />";
         echo "<input hidden type=\"text\" name=\"totalcost\" value=\"". $total. "\" />";
-        //validation for datetime?
-        echo "<label for=\"datetime\">Date Sold</label>";
-        echo "<input type=\"text\" id=\"datetime\" name=\"datetime\" pattern=\"^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\" placeholder=\"YYYY-MM-DD\" />";
+
+        //manual datetime
+        // echo "<label for=\"datetime\">Date Sold</label>";
+        // echo "<input type=\"text\" id=\"datetime\" name=\"datetime\" pattern=\"^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])\" placeholder=\"YYYY-MM-DD\" />";
+
+        //automatic datetime
+        date_default_timezone_set('Australia/Melbourne');
+        $datetime = date('Y-m-d h:i:s', time());
+        echo "<input hidden type=\"text\" name=\"datetime\" value=\"". $datetime. "\" />";
+
+        //submit
         echo "<input type=\"submit\" value=\"Submit Record\" />";
       }
       else {
@@ -122,7 +130,7 @@
           $i += 1;
           //modify item amount for each sale line
           $sql = "UPDATE Items SET stockAmt = \"". $_POST[$leftID]. "\" WHERE itemID = \"". $_POST[$currentItemID]. "\"";
-          echo "<p>Query is:". $sql. "</p>";
+          // echo "<p>Query is:". $sql. "</p>";
           $result = $conn->query($sql);
           if ($result) {
             echo "<p>Sale stock updated.</p>";
