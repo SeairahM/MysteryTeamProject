@@ -1,26 +1,38 @@
 "use strict";
  function fillSaleLines() {
-   
- }
-
- function saveSaleLines() {
-   var linesNum = document.getElementById('linesnum').content;
+   var linesNum = Number(document.getElementById('linesnum').textContent);
    var i = 0;
    var currentItemID,currentAmtID;
    while (i < linesNum) {
      currentItemID = "itemline_" + i;
      currentAmtID = "amtline_" + i;
-     localStorage.setItem(currentItemID,document.getElementById(currentItemID).content);
-     localStorage.setItem(currentAmtID,document.getElementById(currentAmtID).content);
+     document.getElementById(currentItemID).value = localStorage.getItem(currentItemID);
+     document.getElementById(currentAmtID).value = localStorage.getItem(currentAmtID);
+     i += 1;
+   }
+ }
+
+ function saveSaleLines() {
+   var linesNum = Number(document.getElementById('linesnum').textContent);
+   var i = 0;
+   var currentItemID,currentAmtID;
+   while (i < linesNum) {
+     currentItemID = "itemline_" + i;
+     currentAmtID = "amtline_" + i;
+     localStorage.setItem(currentItemID,document.getElementById(currentItemID).value);
+     localStorage.setItem(currentAmtID,document.getElementById(currentAmtID).value);
      i += 1;
    }
  }
 
  function init() {
+   if (localStorage.getItem("itemline_0")) {
+     fillSaleLines();
+   }
    var buttonNewLine = document.getElementById('button_new_line');
    var processForm1 = document.getElementById('form_process');
    buttonNewLine.onsubmit = saveSaleLines;
    processForm1.onsubmit = saveSaleLines;
  }
 
- document.onload = init;
+window.onload = init;
