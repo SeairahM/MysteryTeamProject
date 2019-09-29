@@ -1,6 +1,7 @@
 <!DOCTYPE=html>
 <html lang='en'>
 <head>
+   <script src="add_sales_script.js"></script>
 </head>
 <body>
   <h1>Add New Sales Record</h1>
@@ -12,6 +13,9 @@
     else {
       $linesnum = (int)$_POST["linesnum"] + 1;
     }
+    if (isset($_GET["linesnum"])) {
+      $linesnum = (int)$_GET["linesnum"];
+    }
   ?>
   <p id="linesnum"><?php echo $linesnum; ?></p><p> items sold.</p>
 <?php
@@ -20,9 +24,8 @@
   $conn = $DBConn;
 
   //get lists of item names
-  $sql = "SELECT itemID, itemName FROM Items";
+  $sql = "SELECT itemID, itemName, stockAmt FROM Items";
   $result = $conn->query($sql);
-  echo "<p>". $result->num_rows. "rows</p>";
   //input sales form
   echo "<form action=\"add_sales_process.php?submit=n\" method=\"POST\" id =\"form_process\">";
   //hidden input of sale lines no
@@ -37,13 +40,13 @@
     while ($j < $result->num_rows) {
     //1 itemID per option
       while ($row = $result->fetch_assoc()) {
-        echo "<option value=\"". $row["itemID"]. "\">". $row["itemID"]. "-". $row["itemName"]. "</option>";
+        echo "<option value=\"". $row["itemID"]. "\">". $row["itemID"]. "-". $row["itemName"]. "-". $row["stockAmt"]. " in stock</option>";
       }
       $j += 1;
     }
     echo "</select>";
     echo "<label for=\"amtline_". $i. "\">Item Amount</label>";
-    echo "<input type=\"text\" id=\"amtline_". $i. "\" name=\"itemAmount_". $i. "\" />";
+    echo "<input type=\"text\" id=\"amtline_". $i. "\" name=\"itemAmount_". $i. "\" pattern=\"\d+\"/>";
     $i += 1;
     echo "<br />";
     //redo query for additional sale lines
@@ -54,9 +57,11 @@
   echo "</form>";
 ?>
 <!-- add sales line -->
-<form action = "add_sales.php?newline=y" method="POST" id="button_new_line">
+<form action="add_sales.php?newline=y" method="POST" id="button_new_line">
   <input hidden type="text" name="linesnum" value=<?php echo $linesnum; ?> />
   <input type="submit" value="Add sales line" />
 </form>
+<!-- reset button -->
+<a href="add_sales.php" id="button_reset">Reset form</a>
 </body>
 </html>
