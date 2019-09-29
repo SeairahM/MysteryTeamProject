@@ -10,7 +10,7 @@
       $linesnum = 1;
     }
     else {
-      $linesnum = $_POST["linesnum"] + 1;
+      $linesnum = (int)$_POST["linesnum"] + 1;
     }
   ?>
   <p id="linesnum"><?php echo $linesnum; ?></p><p> items sold.</p>
@@ -45,6 +45,7 @@
     echo "<label for=\"amtline_". $i. "\">Item Amount</label>";
     echo "<input type=\"text\" id=\"amtline_". $i. "\" name=\"itemAmount_". $i. "\" />";
     $i += 1;
+    echo "<br />";
     //redo query for additional sale lines
     mysqli_free_result($result);
     $result = $conn->query($sql);
@@ -54,7 +55,7 @@
 ?>
 <!-- add sales line -->
 <form action = "add_sales.php?newline=y" method="POST" id="button_new_line">
-  <input hidden type="text" name="linesnum" value=<?php $linesnum ?> />
+  <input hidden type="text" name="linesnum" value=<?php echo $linesnum; ?> />
   <input type="submit" value="Add sales line" />
 </form>
 </body>
