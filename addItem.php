@@ -10,25 +10,25 @@
 <body>
 <?php 
 	$host = "localhost";				// Our host url
-	$user = "admin"; 				// Our user name
+	$user = "admin"; 					// Our user name
 	$pswd = "MysteryTeam2019"; 			// Our password 
-	$dbnm = "PHP"; 					// Our database name
+	$dbnm = "PHP"; 						// Our database name
 	
 	$conn = @mysqli_connect($host, $user, $pswd, $dbnm)
 		or die('Unable to connect to the server');
 				
 				
 	$itemName = $_POST["name"];
-	$itemNode = $_POST["note"];
+	$itemNote = $_POST["note"];
 	$itemCategory = $_POST["category"];   // Getting the detalis of the item we want to add from the user through the form
 	$itemStock = $_POST["stock"];
 	$itemPrice = $_POST["price"];
 	
-	$addItemQuery = "INSERT INTO Items (itemName, itemNode, itemCategory, stockAmt, itemPrice) 
-			VALUES($itemName, $itemNode, $itemCategory, $itemStock, $itemPrice)";
+	$addItemQuery = "INSERT INTO items (itemName, itemNote, itemCategory, stockAmt, itemPrice) 
+			VALUES('$itemName', '$itemNote', '$itemCategory', '$itemStock', '$itemPrice')";
 	
-	$displaySalesResults = @mysqli_query($conn, $addItemQuerys)		//Inserting the item into the database
-				or die('Couldnt add the item'); 
+	$addItem = @mysqli_query($conn, $addItemQuery)		//Inserting the item into the database
+		   or die('Couldnt add the item'); 
 				
 	echo "<p>Item was added successfully!!!</p>";
 	
