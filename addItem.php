@@ -9,14 +9,7 @@
 </head>
 <body>
 <?php 
-	$host = "localhost";				// Our host url
-	$user = "admin"; 					// Our user name
-	$pswd = "MysteryTeam2019"; 			// Our password 
-	$dbnm = "PHP"; 						// Our database name
-	
-	$conn = @mysqli_connect($host, $user, $pswd, $dbnm)
-		or die('Unable to connect to the server');
-				
+	require_once("dbconn.php");
 				
 	$itemName = $_POST["name"];
 	$itemNote = $_POST["note"];
@@ -25,10 +18,10 @@
 	$itemPrice = $_POST["price"];
 	
 	$addItemQuery = "INSERT INTO items (itemName, itemNote, itemCategory, stockAmt, itemPrice) 
-			VALUES('$itemName', '$itemNote', '$itemCategory', '$itemStock', '$itemPrice')";
+						VALUES('$itemName', '$itemNote', '$itemCategory', '$itemStock', '$itemPrice')";
 	
-	$addItem = @mysqli_query($conn, $addItemQuery)		//Inserting the item into the database
-		   or die('Couldnt add the item'); 
+	$displaySalesResults = @mysqli_query($conn, $addItemQuery)		//Inserting the item into the database
+								or die('Couldnt add the item'); 
 				
 	echo "<p>Item was added successfully!!!</p>";
 	
