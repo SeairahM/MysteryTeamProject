@@ -9,7 +9,7 @@
 <body>
 <?php 
 	require_once("dbconn.php");
-	$conn = $DBConn
+	$conn = $DBConn;
 
 	$sale = $_POST["edit"];
 	
