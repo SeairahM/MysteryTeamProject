@@ -67,4 +67,9 @@ include("head.php")
     </form>";
  }
 ?>
+<footer id="signincss">
+<?php
+include("footer.php");
+?>
+</footer>
 </html>
