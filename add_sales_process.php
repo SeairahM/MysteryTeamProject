@@ -1,8 +1,18 @@
+<?php require_once("checkLogin.php"); ?>
+<?php
+if (!isset($_GET["submit"])) {
+  header("Location: index.php");
+}
+?>
 <!DOCTYPE=html>
 <html lang='en'>
 <head>
+  <?php include("head.php"); ?>
+   <link rel="stylesheet" href="PHP_SR_StyleSheet.css">
 </head>
 <body>
+<?php include("navigation.php"); ?>
+<section>
 <?php
   function echoSaleLineInputs($leftstocks) {
     //convert string to numeric?
@@ -144,8 +154,13 @@
       else {
         echo "<p>Failed to save sale record.</p>";
       }
+      echo "<a href=\"add_sales.php\">Back to Add Sales</a>";
     }
   }
 ?>
+</section>
+<footer>
+  <?php include("footer.php"); ?>
+</footer>
 </body>
 </html>
