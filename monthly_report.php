@@ -3,7 +3,6 @@
 <head>
 </head>
 <?php
-  include("navigation.php");
   require_once("dbconn.php");
   $conn = $DBConn;
   //get current date
