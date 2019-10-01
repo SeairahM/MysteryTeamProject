@@ -8,6 +8,7 @@
 </head>
 <body>
 <?php 
+	include("navigation.php");
 	require_once("dbconn.php");
 	$conn = $DBConn;
 
