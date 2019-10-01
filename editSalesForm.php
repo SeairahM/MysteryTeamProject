@@ -1,15 +1,15 @@
+<?php require_once("checkLogin.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8"/>
-	<meta name="description" content="Great Pharmacy Stocktake"/>
-	<meta name="keywords" content="business"/>
-	<meta name="author" content="Mystery Team"/>	
-	<link href="PHP_SR_StyleSheet.css" rel="stylesheet" />
+<?php
+	include("head.php");
+?>
 </head>
 <body>
 <?php 
 	require_once("dbconn.php");
+	$conn = $DBConn
 
 	$sale = $_POST["edit"];
 	
@@ -63,8 +63,11 @@
 				<input type=\"reset\" value=\"Reset\" />	
 				</fieldset>
 			</form>";											//Submit and Reset Buttons
-	
-	mysqli_close($conn);  //closing connection
 ?>
+<footer>
+<?php
+	include("footer.php");
+?>
+</footer>
 </body>
 </html>
