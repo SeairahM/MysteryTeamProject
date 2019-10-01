@@ -66,6 +66,5 @@ include("head.php")
         </div>
     </form>";
  }
-
 ?>
 </html>
