@@ -9,7 +9,7 @@
 <body>
 <?php 
 	require_once("dbConnection.php");
-	$conn = $DBConn
+	$conn = $DBConn;
 	
 	$numberOfSales = 1;
 	
