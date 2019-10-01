@@ -9,7 +9,7 @@
 <body>
 <?php 
 	require_once("dbConnection.php");
-	$conn = $DBConn
+	$conn = $DBConn;
 	
 	$itemName = $_POST["name"];
 	$itemNote = $_POST["note"];
