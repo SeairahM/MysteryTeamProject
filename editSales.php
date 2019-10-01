@@ -1,15 +1,16 @@
+<?php require_once("checkLogin.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8"/>
-	<meta name="description" content="Great Pharmacy Stocktake"/>
-	<meta name="keywords" content="business"/>
-	<meta name="author" content="Mystery Team"/>	
-	<link href="PHP_SR_StyleSheet.css" rel="stylesheet" />
+	<?php
+		include("head.php");
+	?>
 </head>
 <body>
 <?php 
 	require_once("dbconn.php");
+	$conn = $DBConn
+	
 
 	$sale = $_POST["saleEdited"];
 	$newCost = $_POST["cost"];
@@ -172,9 +173,12 @@
 		}
 		
 	}
-	
-	mysqli_close($conn);  //closing connection
 ?>
 <a href="saleDisplay.php">Return to Display sales</a>
+<footer>
+<?php
+	include("footer.php");
+?>
+</footer>
 </body>
 </html>
