@@ -1,70 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8" />
-	<meta name="description" content="Assignment 1" />
-	<meta name="keywords" content="assingment" />
-	<meta name="author" content="Apostolos Lafazanis" />
-	<!-- <link rel="stylesheet" 	 href="style.css" />			-- Linking CSS stylesheet-->
-	<title>Job Post Result</title>
+	<meta charset="utf-8"/>
+	<meta name="description" content="Great Pharmacy Stocktake"/>
+	<meta name="keywords" content="business"/>
+	<meta name="author" content="Mystery Team"/>	
+	<link href="PHP_SR_StyleSheet.css" rel="stylesheet" />
 </head>
 <body>
 <?php 
-	$host = "localhost";				// Our host url
-	$user = "admin"; 					// Our user name
-	$pswd = "MysteryTeam2019"; 			// Our password 
-	$dbnm = "PHP"; 						// Our database name
-	
-	$conn = @mysqli_connect($host, $user, $pswd, $dbnm)
-				or die('Unable to connect to the server');
+	require_once("dbconn.php");
 
 	$sale = $_POST["edit"];
 	
 	
-	$saleRecordQuery = "SELECT * FROM SaleRecord WHERE saleID = " . $sale . "";
+	$saleRecordQuery = "SELECT * FROM salerecords WHERE saleID = '" . $sale . "'";
 	
-	$saleRecordResult = @mysqli_query($conn, $saleRecordQuery)		//Inserting the item into the database
-							or die('Couldnt get the sale details');
+	$saleRecordResult = @mysqli_query($conn, $saleRecordQuery)		//Getting the sale information of the sale the user clicked to edit
+							or die('Couldnt get the sale details1');
 							
 							
-	$saleItemsQuery = "SELECT SaleLines.itemID, Items.itemName, SaleLines.saleAmt FROM SaleLines 
-								INNER JOIN Items
-								ON SaleLines.itemID=Items.itemID    
-								WHERE saleID = ". $sale . "";
+	$saleItemsQuery = "SELECT salelines.itemID, items.itemName, salelines.saleAmt FROM salelines 
+								INNER JOIN items
+								ON salelines.itemID=items.itemID    
+								WHERE saleID = '". $sale . "'";
 								
-	$saleItemsResults = @mysqli_query($conn, $saleItemsQuery)		//Inserting the item into the database
-						or die('Couldnt get the sale details');
+	$saleItemsResults = @mysqli_query($conn, $saleItemsQuery)		//Getting the items and their details of the sale the user clicked to edit
+						or die('Couldnt get the sale details2');
 	
 
 	
 	while($saleDetails = mysqli_fetch_row($saleRecordResult))
 	{
-		$totalCost = $saleDetails[0];
-		$payMethod = $saleDetails[1];
-		$dateAndTime = $saleDetails[2];
+		$totalCost = $saleDetails[1];
+		$payMethod = $saleDetails[2];				//Storing the sale general details in varibles so that we can use them freely later
+		$dateAndTime = $saleDetails[3];
 	}
 	
-	echo nl2br "<form action = \"editSales.php\" method = \"post\" >
-					<p>Edit sale Number: " . $sale . "</p>\n
+	echo "<form action = \"editSales.php\" method = \"post\" >
+					<p>Editting Sale No: " . $sale . "</p>
 					<fieldset>
-						<input type=\"text\" name=\"cost\" value=\"" . $totalCost . "\" />\n
-						<input type=\"text\" name=\"method\" value=\"" . $payMethod . "\" />\n
-						<input type=\"hidden\" name=\"saleEdited\" value=\"" . $sale . "\"";
+						<legend>New Sale Details</legend>
+						<label>New Total Cost: </label>
+						<input type=\"text\" name=\"cost\" value=\"" . $totalCost . "\" /><br>
+						
+						<label>New Payment Method: </label>
+						<input type=\"text\" name=\"method\" value=\"" . $payMethod . "\" /><br><br>
+						
+						<input type=\"hidden\" name=\"saleEdited\" value=\"" . $sale . "\" />";   //Creating the editting form of the sale the user wants to edit
+																									
+						
 		
 	while($saleItems = mysqli_fetch_row($saleItemsResults))
 	{
-		echo nl2br "<label>" . $saleItems[0] . " " . $saleItems[1] . "</label>
-		<input type=\"text\" name=\"" . $saleItems[0] . "\" value=\"" . $saleItems[2] . "\" />\n"		
+		echo "<label>ItemID:" . $saleItems[0] . " " . $saleItems[1] . "</label><br>
+			  <label>New Sale Quantity</label>
+			  <input type=\"text\" name=\"" . $saleItems[0] . "\" value=\"" . $saleItems[2] . "\" /><br><br>";	//Creating the text fields for the amount of the items in the sale the user wants to edit/change
 	}
 					
 
-	echo "  	</fieldset>
-			</form>";
-	
-	//echo nl2br "<p>Total cost of Items: "
-	
-	
-	
+	echo " 		<input type=\"submit\" value=\"Submit Changes\" />							
+				<input type=\"reset\" value=\"Reset\" />	
+				</fieldset>
+			</form>";											//Submit and Reset Buttons
 	
 	mysqli_close($conn);  //closing connection
 ?>
