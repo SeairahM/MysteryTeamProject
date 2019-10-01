@@ -8,12 +8,12 @@
 </head>
 <body>
 <?php 
-	require_once("dbConnection.php");
+	require_once("dbconn.php");
 	$conn = $DBConn;
 	
 	$numberOfSales = 1;
 	
-	$dateTimeQuery = "SELECT saleID, dateTime FROM salerecords ORDER BY dateTime DESC";  // Selectiing all the sales from the most recent ones to the oldest
+	$dateTimeQuery = "SELECT saleID, dateTime FROM SaleRecords ORDER BY dateTime DESC";  // Selectiing all the sales from the most recent ones to the oldest
 	
 	$dateTimeResults = @mysqli_query($conn, $dateTimeQuery)
 						or die('Couldnt get the dates');  	
@@ -25,9 +25,9 @@
 		if($numberOfSales <= 10)									//Keep fetching sales till the variable reaches 10 
 		{
 			$itemCount = 1;
-			$displayItemsInSaleQuery = "SELECT salelines.itemID, items.itemName, salelines.saleAmt FROM salelines 
-			INNER JOIN items
-			ON salelines.itemID=items.itemID    
+			$displayItemsInSaleQuery = "SELECT SaleLines.itemID, Items.itemName, SaleLines.saleAmt FROM SaleLines 
+			INNER JOIN Items
+			ON SaleLines.itemID=Items.itemID    
 			WHERE saleID = ". $sale[0] . "";  						// SQL Query that returns the details of the items in the current sales record iteration
 		
 			

@@ -14,15 +14,15 @@
 	$sale = $_POST["edit"];
 	
 	
-	$saleRecordQuery = "SELECT * FROM salerecords WHERE saleID = '" . $sale . "'";
+	$saleRecordQuery = "SELECT * FROM SaleRecords WHERE saleID = '" . $sale . "'";
 	
 	$saleRecordResult = @mysqli_query($conn, $saleRecordQuery)		//Getting the sale information of the sale the user clicked to edit
 							or die('Couldnt get the sale details1');
 							
 							
-	$saleItemsQuery = "SELECT salelines.itemID, items.itemName, salelines.saleAmt FROM salelines 
-								INNER JOIN items
-								ON salelines.itemID=items.itemID    
+	$saleItemsQuery = "SELECT SaleLines.itemID, Items.itemName, SaleLines.saleAmt FROM SaleLines 
+								INNER JOIN Items
+								ON SaleLines.itemID=Items.itemID    
 								WHERE saleID = '". $sale . "'";
 								
 	$saleItemsResults = @mysqli_query($conn, $saleItemsQuery)		//Getting the items and their details of the sale the user clicked to edit

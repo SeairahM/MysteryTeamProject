@@ -20,7 +20,7 @@
 		
 		<label>Category: </label>
 		<?php
-			require_once("dbConnection.php");	
+			require_once("dbconn.php");	
 			$conn = $DBConn;
 			
 			$getCategoryQuery = "SELECT categoryID, categoryName FROM Categories";

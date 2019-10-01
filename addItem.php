@@ -8,7 +8,7 @@
 </head>
 <body>
 <?php 
-	require_once("dbConnection.php");
+	require_once("dbconn.php");
 	$conn = $DBConn;
 	
 	$itemName = $_POST["name"];
@@ -17,9 +17,7 @@
 	$itemStock = $_POST["stock"];
 	$itemPrice = $_POST["price"];
 	
-	$addItemQuery = "INSERT INTO items (itemName, itemNote, itemCategory, stockAmt, itemPrice) 
-						VALUES('$itemName', '$itemNote', '$itemCategory', '$itemStock', '$itemPrice')";
-	
+	$addItemQuery = "INSERT INTO Items (itemName, itemNote, itemCategory, stockAmt, itemPrice) VALUES('$itemName', '$itemNote', '$itemCategory', '$itemStock', '$itemPrice')";	
 	$displaySalesResults = @mysqli_query($conn, $addItemQuery)		//Inserting the item into the database
 								or die('Couldnt add the item'); 
 				
