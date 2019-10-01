@@ -1,11 +1,10 @@
+<?php require_once("checkLogin.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8"/>
-	<meta name="description" content="Great Pharmacy Stocktake"/>
-	<meta name="keywords" content="business"/>
-	<meta name="author" content="Mystery Team"/>
-	<link href="PHP_SR_StyleSheet.css" rel="stylesheet" />
+	<?php
+		include("head.php");
+	?>
 </head>
 <body>
 	<h2>Add Item Page</h2>	
@@ -21,12 +20,13 @@
 		
 		<label>Category: </label>
 		<?php
-			require_once("dbconn.php");	
+			require_once("dbConnection.php");	
+			$conn = $DBConn
 			
 			$getCategoryQuery = "SELECT categoryID, categoryName FROM Categories";
 	
 			$getCategoryResults = @mysqli_query($conn, $getCategoryQuery)		//Getting the category table from the database
-						or die('Couldnt get the category'); 
+									or die('Couldnt get the category'); 
 		
 			echo "<select name=\"category\" >";
 			echo "<option value=\"\"> --- </option>";
@@ -37,8 +37,6 @@
 			}
 			
 			echo "</select><br>";
-		
-			mysqli_close($conn);  				//Closing connection
 		?>
 		
 		<label>Stock: </label>
@@ -51,5 +49,10 @@
 		<input type="reset" value="Reset" />
 	</fieldset>
 	</form>
+	<footer>
+	<?php
+		include("footer.php");
+	?>
+</footer>
 </body>
 </html>
