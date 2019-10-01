@@ -1,13 +1,10 @@
 <?php
 echo "<div id=\"navigation\">
   <nav>
-    <a href=\"\">1</a> |
-    <a href=\"\">2</a> |
-    <a href=\"\">3</a> |
-    <a href=\"\">4</a> |
-    <a href=\"\">5</a> |
-    <a href=\"\">6</a> |
-    <a href=\"\">7</a> |
+    <a href=\"index.php\">Sign in</a> |
+    <a href=\"signout.php\">Sign Out</a> |
+    <a href=\"add_sales.php\">Add Sales</a> |
+    <a href=\"Sales.php\">Home Page</a> |
   </nav>
-</div>"
+</div>";
 ?>
