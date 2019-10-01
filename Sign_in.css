@@ -1,0 +1,45 @@
+body {
+	background-image: url("images/headerimage.png");
+	background-size: 100% 100%;
+	margin: 0px;
+	height: 260px;
+	font: 27px calibri regular, sans-serif;
+  color: teal;
+	padding-bottom: 0px;
+  padding-left:632px;
+  padding-top: 100px;
+  font-weight: bold;
+}
+
+input{
+  width: 200px;
+  height: 30px;
+  font: 14px calibri regular, sans-serif;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding-left:40px;
+
+}
+#error{
+  margin-left: -200;
+  color: red;
+}
+
+label{
+  height: 100px;
+  margin-top: 20px;
+  padding:25px;
+}
+button{
+  width: 70px;
+  font: 16px calibri regular, sans-serif;
+  float:left;
+  margin-left: 55px;
+  margin-top: 10px;
+  color: teal;
+}
+form{
+  align-items: center;
+  align-content: center;
+}
