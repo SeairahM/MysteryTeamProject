@@ -1,22 +1,22 @@
+<?php require_once("checkLogin.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="utf-8"/>
-	<meta name="description" content="Great Pharmacy Stocktake"/>
-	<meta name="keywords" content="business"/>
-	<meta name="author" content="Mystery Team"/>	
-	<link href="PHP_SR_StyleSheet.css" rel="stylesheet" />
+	<?php
+		include("head.php");
+	?>
 </head>
 <body>
 <?php 
-	require_once("dbconn.php");
+	require_once("dbConnection.php");
+	$conn = $DBConn
 	
 	$numberOfSales = 1;
 	
 	$dateTimeQuery = "SELECT saleID, dateTime FROM salerecords ORDER BY dateTime DESC";  // Selectiing all the sales from the most recent ones to the oldest
 	
 	$dateTimeResults = @mysqli_query($conn, $dateTimeQuery)
-			   or die('Couldnt get the dates');  	
+						or die('Couldnt get the dates');  	
 								
 
 	
@@ -32,7 +32,7 @@
 		
 			
 			$displayItemsInSaleResult = @mysqli_query($conn, $displayItemsInSaleQuery)
-						    or die('Couldnt display the items of the Sale');
+										or die('Couldnt display the items of the Sale');
 				
 			echo "<p>Sale ID Number: " . $sale[0] . "
 			<form action=\"editSalesForm.php\" method=\"post\"> 
@@ -57,8 +57,11 @@
 			break;          // Else when it reaches 10, stop fetching
 		}
 	}	
-	
-	mysqli_close($conn);  //Closing connection
 ?>
+<footer>
+<?php
+	include("footer.php");
+?>
+</footer>
 </body>
 </html>
