@@ -1,6 +1,9 @@
+<?php require_once("checkLogin.php"); ?>
 <!DOCTYPE=html>
 <html lang='en'>
 <head>
+  <?php include("head.php"); ?>
+   <link rel="stylesheet" href="PHP_SR_StyleSheet.css">
 </head>
 <?php
   require_once("dbconn.php");
@@ -14,6 +17,7 @@
   $result = $conn->query($sql);
  ?>
 <body>
+  <?php include("navigation.php"); ?>
   <h1>Monthly Report</h1>
   <h2>Current month: <?php echo $currentmonth; ?></h2>
   <section>
@@ -34,8 +38,8 @@
       ?>
     </table>
   </section>
-<?php
-
- ?>
+ <footer>
+   <?php include("footer.php"); ?>
+ </footer>
 </body>
 </html>
