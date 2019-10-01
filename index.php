@@ -1,3 +1,10 @@
+<html>
+<head>
+<?php
+include("head.php")
+?>
+<link rel="stylesheet" type="text/css" href="sign_in.css">
+</head>
 <?php
     require_once("dbconn.php");
     session_start();
@@ -59,5 +66,5 @@
         </div>
     </form>";
  }
-
 ?>
+</html>
