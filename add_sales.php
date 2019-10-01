@@ -1,10 +1,15 @@
+<?php require_once("checkLogin.php"); ?>
 <!DOCTYPE=html>
 <html lang='en'>
 <head>
+  <?php include("head.php"); ?>
+   <link rel="stylesheet" href="PHP_SR_StyleSheet.css">
    <script src="add_sales_script.js"></script>
 </head>
 <body>
+  <?php include("navigation.php"); ?>
   <h1>Add New Sales Record</h1>
+  <section>
   <?php
     //increment line num
     if (!isset($_GET["newline"])) {
@@ -63,5 +68,9 @@
 </form>
 <!-- reset button -->
 <a href="add_sales.php" id="button_reset">Reset form</a>
+</section>
+<footer>
+  <?php include("footer.php"); ?>
+</footer>
 </body>
 </html>
