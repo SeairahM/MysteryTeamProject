@@ -21,7 +21,7 @@
 		<label>Category: </label>
 		<?php
 			require_once("dbConnection.php");	
-			$conn = $DBConn
+			$conn = $DBConn;
 			
 			$getCategoryQuery = "SELECT categoryID, categoryName FROM Categories";
 	
