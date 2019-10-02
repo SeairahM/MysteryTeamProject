@@ -1,11 +1,16 @@
 <?php
-echo "<div id=\"navigation\">
-  <nav>    
-    <a href=\"add_sales.php\">Add Sales</a> |
-    <a href=\"saleDisplay.php\">Display Sales</a> |
-    <a href=\"addItemForm.php\">Add Item</a> |
-    <a href=\"monthly_report.php\">Monthly Report</a> |
-    <a href=\"signout.php\">Sign Out</a>
-  </nav>
-</div>";
+echo "<header id=\"navigation\">
+		<img src=\"images/PHP_SR_Logo.png\" alt="Logo"/>
+		<a href=\"signout.php\">SIGN-OUT</a>
+		<aside>
+		<nav>
+		    <ul>
+		      <li><a href=\"add_sales.php\">ADD SALES</a></li>
+		      <li><a href=\"saleDisplay.php\">DISPLAY SALES</a></li> 
+		      <li><a href=\"addItemForm.php\">ADD ITEMS</a></li>
+		      <li><a href=\"monthly_report.php\">REPORTS</a></li>
+		    </ul>
+		</nav>
+		</aside>
+	</header>";
 ?>

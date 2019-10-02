@@ -8,8 +8,8 @@
 </head>
 <body>
   <?php include("navigation.php"); ?>
+  <div>
   <h1>Add New Sales Record</h1>
-  <section>
   <?php
     //increment line num
     if (!isset($_GET["newline"])) {
@@ -68,7 +68,7 @@
 </form>
 <!-- reset button -->
 <a href="add_sales.php" id="button_reset">Reset form</a>
-</section>
+</div>
 <footer>
   <?php include("footer.php"); ?>
 </footer>

@@ -5,6 +5,9 @@ include("head.php")
 ?>
 <link rel="stylesheet" type="text/css" href="sign_in.css">
 </head>
+<body>
+    <?php include("navigation.php"); ?>
+<div>
 <?php
     require_once("dbconn.php");
     session_start();
@@ -67,9 +70,11 @@ include("head.php")
     </form>";
  }
 ?>
+</div>
 <footer id="signincss">
 <?php
 include("footer.php");
 ?>
 </footer>
+</body>
 </html>
