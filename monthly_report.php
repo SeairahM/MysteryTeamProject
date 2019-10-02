@@ -14,6 +14,8 @@
   $result = $conn->query($sql);
  ?>
 <body>
+  <?php include("navigation.php"); ?>
+  <div>
   <h1>Monthly Report</h1>
   <h2>Current month: <?php echo $currentmonth; ?></h2>
   <section>
@@ -37,5 +39,6 @@
 <?php
 
  ?>
+</div>
 </body>
 </html>

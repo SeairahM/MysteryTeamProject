@@ -8,7 +8,9 @@
 </head>
 <body>
 <?php 
-	include("navigation.php");
+	include("navigation.php");?>
+	<div>
+<?php	
 	require_once("dbconn.php");
 	$conn = $DBConn;
 	
@@ -176,6 +178,7 @@
 	}
 ?>
 <a href="saleDisplay.php">Return to Display sales</a>
+</div>
 <footer>
 <?php
 	include("footer.php");

@@ -7,8 +7,9 @@
 ?>
 </head>
 <body>
+<?php include("navigation.php"); ?>
+<div>
 <?php 
-	include("navigation.php");
 	require_once("dbconn.php");
 	$conn = $DBConn;
 
@@ -65,6 +66,7 @@
 				</fieldset>
 			</form>";											//Submit and Reset Buttons
 ?>
+</div>
 <footer>
 <?php
 	include("footer.php");

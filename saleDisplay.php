@@ -7,6 +7,7 @@
 	?>
 </head>
 <body>
+<div>
 <?php 
 	include("navigation.php");
 	require_once("dbconn.php");
@@ -59,6 +60,7 @@
 		}
 	}	
 ?>
+</div>
 <footer>
 <?php
 	include("footer.php");

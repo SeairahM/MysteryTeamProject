@@ -12,7 +12,7 @@ if (!isset($_GET["submit"])) {
 </head>
 <body>
 <?php include("navigation.php"); ?>
-<section>
+<div>
 <?php
   function echoSaleLineInputs($leftstocks) {
     //convert string to numeric?
@@ -158,7 +158,7 @@ if (!isset($_GET["submit"])) {
     }
   }
 ?>
-</section>
+</div>
 <footer>
   <?php include("footer.php"); ?>
 </footer>
