@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
 	<?php
-		include("head.php");
+		include "head.php";
 	?>
 </head>
 <body>
+	<?php include "navigation.php"; ?>
 <div>
-<?php 
-	include("navigation.php");
+<?php
 	require_once("dbconn.php");
 	$conn = $DBConn;
 	

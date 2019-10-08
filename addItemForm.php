@@ -2,13 +2,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<?php
-		include("head.php");
-	?>
+	<?php include "head.php"; ?>
 </head>
 <body>
 	<?php
-		include("navigation.php");
+		include "navigation.php";
 	?>
 	<h2>Add Item Page</h2>	
 	<p>Please enter the details of the item you would like to add below:</p>

@@ -7,11 +7,10 @@ if (!isset($_GET["submit"])) {
 <!DOCTYPE=html>
 <html lang='en'>
 <head>
-  <?php include("head.php"); ?>
-   <link rel="stylesheet" href="PHP_SR_StyleSheet.css">
+  <?php include "head.php"; ?>
 </head>
 <body>
-<?php include("navigation.php"); ?>
+<?php include "navigation.php"; ?>
 <div>
 <?php
   function echoSaleLineInputs($leftstocks) {

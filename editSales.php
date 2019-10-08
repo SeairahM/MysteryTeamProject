@@ -2,13 +2,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<?php
-		include("head.php");
-	?>
+	<?php include "head.php"; ?>
 </head>
 <body>
 <?php 
-	include("navigation.php");?>
+	include "navigation.php"; ?>
 	<div>
 <?php	
 	require_once("dbconn.php");

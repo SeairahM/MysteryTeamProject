@@ -1,6 +1,7 @@
 <!DOCTYPE=html>
 <html lang='en'>
 <head>
+  <?php include "head.php"; ?>
 </head>
 <?php
   require_once("dbconn.php");
@@ -14,7 +15,7 @@
   $result = $conn->query($sql);
  ?>
 <body>
-  <?php include("navigation.php"); ?>
+  <?php include "navigation.php"; ?>
   <div>
   <h1>Monthly Report</h1>
   <h2>Current month: <?php echo $currentmonth; ?></h2>

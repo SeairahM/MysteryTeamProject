@@ -2,12 +2,12 @@
 <!DOCTYPE=html>
 <html lang='en'>
 <head>
-  <?php include("head.php"); ?>
+  <?php include "head.php"; ?>
    <link rel="stylesheet" href="PHP_SR_StyleSheet.css">
    <script src="add_sales_script.js"></script>
 </head>
 <body>
-  <?php include("navigation.php"); ?>
+  <?php include "navigation.php"; ?>
   <div>
   <h1>Add New Sales Record</h1>
   <?php
