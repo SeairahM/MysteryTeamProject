@@ -81,13 +81,13 @@ if(isset($_POST['username']) && isset($_POST['password']))
 	    <form action = "addUser.php" method = "POST">
             <h1>Add User</h1>
             <label>Username:   </label>
-            <input type="text" name="username" required/><br/>
+            <input type="text" name="username" pattern="[A-Za-z\d]{1,50}" required/><br/>
             <label>Password:   </label>
-            <input type="password" name="password" required/><br/>
+            <input type="password" name="password" pattern="[A-Za-z\d]{1,50}" required/><br/>
             <label>First Name: </label>
-            <input type="text" name="fname" /><br/>
+            <input type="text" name="fname" pattern="[A-Za-z]{1,50}"/><br/>
             <label>Surname:    </label>
-            <input type="text" name="lname" /><br/><br/>
+            <input type="text" name="lname" pattern="[A-Za-z]{1,50}"/><br/><br/>
             <input type="submit" value="Add User"/>&nbsp;
             <input type="reset" value="Clear"/><br/>
         </form>
