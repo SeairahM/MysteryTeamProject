@@ -63,7 +63,7 @@
   echo "<input type=\"radio\" id=\"addwhatstock\" name=\"addwhat\" value=\"stock\" checked=\"checked\"/>";
   echo "<label for=\"addwhatsales\">Add Sales</label>";
   echo "<input type=\"radio\" id=\"addwhatsales\" name=\"addwhat\" value=\"sales\" />";
-  echo "<input type=\"submit\" value=\"Check Item Amount\" />";
+  echo "<input type=\"submit\" value=\"Next\" />";
   echo "</form>";
 ?>
 <!-- add sales line -->
