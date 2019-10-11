@@ -9,7 +9,7 @@
 <body>
   <?php include("navigation.php"); ?>
   <div>
-  <h1>Add New Sales Record</h1>
+  <h1>Add Sales/Stock</h1>
   <?php
     //increment line num
     if (!isset($_GET["newline"])) {
@@ -22,7 +22,7 @@
       $linesnum = (int)$_GET["linesnum"];
     }
   ?>
-  <p id="linesnum"><?php echo $linesnum; ?></p><p> items sold.</p>
+  <span hidden id="linesnum"><?php echo $linesnum; ?></span>
 <?php
   //db connection - from dbconn.php
   require_once("dbconn.php");
@@ -32,7 +32,7 @@
   $sql = "SELECT itemID, itemName, stockAmt FROM Items";
   $result = $conn->query($sql);
   //input sales form
-  echo "<form action=\"add_sales_process.php?submit=n\" method=\"POST\" id =\"form_process\">";
+  echo "<form action=\"validateSalesOrStock.php\" method=\"POST\" id =\"form_process\">";
   //hidden input of sale lines no
   echo "<input hidden type=\"text\" name=\"linesnum\" value=\"". $linesnum. "\" />";
   //iterate over lines of sales
@@ -51,23 +51,28 @@
     }
     echo "</select>";
     echo "<label for=\"amtline_". $i. "\">Item Amount</label>";
-    echo "<input type=\"text\" id=\"amtline_". $i. "\" name=\"itemAmount_". $i. "\" pattern=\"\d+\"/>";
+    echo "<input type=\"text\" id=\"amtline_". $i. "\" name=\"itemAmount_". $i. "\" pattern=\"-?\d+\"/>";
     $i += 1;
     echo "<br />";
     //redo query for additional sale lines
     mysqli_free_result($result);
     $result = $conn->query($sql);
   }
-  echo "<input type=\"submit\" value=\"Calculate price\" />";
+
+  echo "<label for=\"addwhatstock\">Add Stock</label>";
+  echo "<input type=\"radio\" id=\"addwhatstock\" name=\"addwhat\" value=\"stock\" checked=\"checked\"/>";
+  echo "<label for=\"addwhatsales\">Add Sales</label>";
+  echo "<input type=\"radio\" id=\"addwhatsales\" name=\"addwhat\" value=\"sales\" />";
+  echo "<input type=\"submit\" value=\"Next\" />";
   echo "</form>";
 ?>
 <!-- add sales line -->
-<form action="add_sales.php?newline=y" method="POST" id="button_new_line">
+<form action="addSalesOrStock.php?newline=y" method="POST" id="button_new_line">
   <input hidden type="text" name="linesnum" value=<?php echo $linesnum; ?> />
-  <input type="submit" value="Add sales line" />
+  <input type="submit" value="Add new line" />
 </form>
 <!-- reset button -->
-<a href="add_sales.php" id="button_reset">Reset form</a>
+<a href="addSalesOrStock.php" id="button_reset">Reset form</a>
 </div>
 <footer>
   <?php include("footer.php"); ?>

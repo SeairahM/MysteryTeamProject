@@ -5,7 +5,7 @@ echo "<header id=\"navigation\">
 		<aside>
 		<nav>
 		    <ul>
-		      <li><a href=\"add_sales.php\">ADD SALES</a></li>
+		      <li><a href=\"addSalesOrStock.php\">ADD SALES</a></li>
 		      <li><a href=\"saleDisplay.php\">DISPLAY SALES</a></li>
 		      <li><a href=\"addItemForm.php\">ADD ITEMS</a></li>
 					<li><a href=\"displayItems.php\">DISPLAY ITEMS</a></li>
