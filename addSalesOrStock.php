@@ -9,7 +9,15 @@
 <body>
   <?php include("navigation.php"); ?>
   <div>
-  <h1>Add Sales/Stock</h1>
+  <?php
+  //show errmsg from last entry
+  if (isset($_GET["errMsg"])) {
+    echo "<p>";
+    echo $_GET["errMsg"];
+    echo "</p>";
+  }
+  ?>
+  <h2>Add Sales/Stock</h2>
   <?php
     //increment line num
     if (!isset($_GET["newline"])) {
