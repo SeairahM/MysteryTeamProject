@@ -101,6 +101,7 @@
 
   <table border='1' style='border-collapse:collapse;'>
     <tr>
+     <th>Category</th>
      <th>Item ID</th>
      <th>Item Name</th>
      <th>Number of Sales</th>
@@ -108,20 +109,22 @@
      <th>DateTime</th>
     </tr>
     <?php
-     $query2 = "SELECT itemID, itemName, dateTime, stockAmt, COUNT(*) AS counts FROM SaleLines NATURAL JOIN SaleRecords
+     $query2 = "SELECT itemCategory, itemID, itemName, dateTime, stockAmt, COUNT(*) AS counts FROM SaleLines NATURAL JOIN SaleRecords
      NATURAL JOIN Items WHERE MONTH(dateTime) = ". $filtermonth. " AND YEAR(dateTime) = ". $filteryear. $filtercat. " GROUP BY itemID";
      $results = mysqli_query($conn,$query2);
 
      $record_arr = array();
      while($row = mysqli_fetch_array($results)){
+      $cat = $categoryNames[$row['itemCategory'] - 1];
       $id = $row['itemID'];
       $name = $row['itemName'];
       $sAmount = $row['counts'];
       $ItemAmount = $row['stockAmt'];
       $time = $row['dateTime'];
-      $record_arr[] = array($id,$name,$sAmount,$ItemAmount,$time);
+      $record_arr[] = array($cat,$id,$name,$sAmount,$ItemAmount,$time);
    ?>
       <tr>
+      <td><?php echo $cat; ?></td>
        <td><?php echo $id; ?></td>
        <td><?php echo $name; ?></td>
        <td><?php echo $sAmount; ?></td>

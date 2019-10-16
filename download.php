@@ -5,18 +5,18 @@ $first = true;
 
 // file creation
 $file = fopen('php://output', 'w');
-$list = array('Item ID', 'Item Name', 'Number of Sales', 'Remaining Stock', 'DateTime');
+$list = array('Item Category', 'Item ID', 'Item Name', 'Number of Sales', 'Remaining Stock', 'DateTime');
 fputcsv($file, $list);
 foreach ($export_data as $line){
  fputcsv($file,$line);
 }
 
 fclose($file);
- 
+
 // download
 header("Content-Description: File Transfer");
 header("Content-Disposition: attachment; filename=".$filename);
-header("Content-Type: application/csv; "); 
+header("Content-Type: application/csv; ");
 
 exit();
 ?>
