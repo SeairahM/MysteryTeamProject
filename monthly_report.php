@@ -2,56 +2,114 @@
 <html lang='en'>
 <head>
 </head>
-<?php
+  <?php
   require_once("dbconn.php");
   $conn = $DBConn;
   //get current date
   date_default_timezone_set('Australia/Melbourne');
   $currentmonth = date('m');
-  //count sales for each item in month
-  $sql = "SELECT itemID, itemName, COUNT(*) AS counts FROM SaleLines NATURAL JOIN SaleRecords
-  NATURAL JOIN Items WHERE MONTH(dateTime) = ". $currentmonth. " GROUP BY itemID";
+  $currentyear = date('Y');
+  ?>
+  <?php
+  //save category details into 2 arrays for dropdown in filter report form
+  $categoryIDs = array();
+  $categoryNames = array();
+  $sql = "SELECT categoryID, categoryName FROM Categories";
   $result = $conn->query($sql);
- ?>
+  $i = 0;
+  while ($row = $result->fetch_assoc()) {
+    $categoryIDs[$i] = $row["categoryID"];
+    $categoryNames[$i] = $row["categoryName"];
+    $i += 1;
+  }
+  mysqli_free_result($result);
+  ?>
 <body>
 <?php include("navigation.php"); ?>
-  <div>
+  <div class='container'>
   <h1>Monthly Report</h1>
-  <h2>Current month: <?php echo $currentmonth; ?></h2>
-  <section>
-    <table>
-      <tr>
-        <th>Item ID</th>
-        <th>Item Name</th>
-        <th>Sale Amount</th>
-      </tr>
+  <h2>Current month: <?php echo $currentmonth; ?>/<?php echo $currentyear; ?></h2>
+  <!--form to filter report-->
+  <form method='post' action='monthly_report.php'>
+    <label for='repcat'>Category</label>
+    <select id='repcat' name='itemCategory'>
+      <option value='na'>No filter</option>
       <?php
-      while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td>". $row["itemID"]. "</td>";
-        echo "<td>". $row["itemName"]. "</td>";
-        echo "<td>". $row["counts"]. "</td>";
-        echo "</tr>";
+      //show category dropdown
+      $j = 0;
+      while ($j < $i) {
+        echo "<option value=\"". $categoryIDs[$j]. "\"";
+        echo ">". $categoryNames[$j]. "</option>";
+        $j += 1;
       }
       ?>
-    </table>
-  </section>
-</div>
+    </select>
+    <label for='repmonth'>Report for: </label>
+    <select id='repmonth' name='rep_month' required='required'>
+      <?php
+      //echo 12 months, precheck current month
+      $i = 0;
+      while ($i < 12) {
+        echo "<option value=\"". ($i + 1). "\"";
+        if ($i + 1 == $currentmonth) {
+          echo " selected ";
+        }
+        echo ">". ($i + 1). "</option>";
+        $i += 1;
+      }
+      ?>
+      <!--text input for year, prefill current year-->
+      <label for='repyear'> in </label>
+      <input type='text' name='rep_year' value='<?php echo $currentyear; ?>' pattern="\d{4}" placeholder="YYYY" required='required' />
+      <!--submit-->
+      <input type='submit' value='Generate report' />
+    </select>
+  </form>
+    <?php
+    //invalid input msg
+    if (isset($_GET["valid"])) {
+      if ($_GET["valid"] == 'n') {
+        echo "<p>Invalid input. Please try again.</p>";
+      }
+    }
+    //check filter form
+    $displayCat = "No filter";
+    if (isset($_POST["rep_month"])) {
+      $filtermonth = $_POST["rep_month"];
+      $filteryear = $_POST["rep_year"];
 
-<div class="container">
+      if ($_POST["itemCategory"] != "na") {
+        $filtercat = " AND itemCategory = \"". $_POST["itemCategory"]. "\" ";
+        $displayCat = $categoryNames[$_POST["itemCategory"] - 1];
+      }
+      else {
+        $filtercat = "";
+      }
+    }
+    else {
+      $filtermonth = $currentmonth;
+      $filteryear = $currentyear;
+      $filtercat = "";
+    }
+    //display filter criteria
+    echo "<p>Displaying month: ". $filtermonth. "</p>";
+    echo "<p>Displaying year: ". $filteryear. "</p>";
+    echo "<p>Category: ". $displayCat. "</p>";
+   ?>
+
  <form method='post' action='download.php'>
- 
+
   <table border='1' style='border-collapse:collapse;'>
     <tr>
      <th>Item ID</th>
-     <th>Item Name</th> 
+     <th>Item Name</th>
      <th>Number of Sales</th>
      <th>Remaining Stock</th>
      <th>DateTime</th>
     </tr>
-    <?php 
+    <?php
      $query2 = "SELECT itemID, itemName, dateTime, stockAmt, COUNT(*) AS counts FROM SaleLines NATURAL JOIN SaleRecords
-     NATURAL JOIN Items WHERE MONTH(dateTime) = ". $currentmonth. " GROUP BY itemID";
+     NATURAL JOIN Items WHERE MONTH(dateTime) = ". $filtermonth. " AND YEAR(dateTime) = ". $filteryear. $filtercat. " GROUP BY itemID";
      $results = mysqli_query($conn,$query2);
 
      $record_arr = array();
@@ -72,10 +130,11 @@
       </tr>
    <?php
     }
+    mysqli_free_result($results);
    ?>
    </table>
     <input type='submit' value='Export' name='Export'>
-   <?php 
+   <?php
     $serialize_record_arr = serialize($record_arr);
    ?>
   <textarea name='export_data' style='display: none;'><?php echo $serialize_record_arr; ?></textarea>
