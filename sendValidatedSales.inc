@@ -5,7 +5,11 @@
   echoSaleLineInputs($leftstocks);
   //inputs for sale record
   echo "<label for=\"paymethod\">Pay Method</label>";
-  echo "<input type=\"text\" id=\"paymethod\" name=\"paymethod\" />";
+  echo "<select id=\"paymethod\" name=\"paymethod\" required=\"required\">";
+    echo "<option value=\"CASH\" selected>Cash</option>";
+    echo "<option value=\"DEBIT\">Debit Card</option>";
+    echo "<option value=\"CREDIT\">Credit Card</option>";
+  echo "</select>";
   echo "<input hidden type=\"text\" name=\"totalcost\" value=\"". $total. "\" />";
 
   //manual datetime
