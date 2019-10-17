@@ -1,3 +1,4 @@
+<?php require_once("checkLogin.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,8 +26,6 @@
 	{
 		if(!empty($_POST["cost"]) && !empty($_POST["method"]))  // Check if the pay method and the total cost are checked
 		{
-			
-	
 			if(preg_match($cost_pattern, $newCost))
 			{
 	
