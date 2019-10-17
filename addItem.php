@@ -43,10 +43,10 @@
 				if($valid == true)
 				{	
 					$addItemQuery = "INSERT INTO items (itemName, itemNote, itemCategory, stockAmt, itemPrice) 
-									VALUES('$itemName', '$itemNote', '$itemCategory', '$itemStock', '$itemPrice')";
+							VALUES('$itemName', '$itemNote', '$itemCategory', '$itemStock', '$itemPrice')";
 		
-					$displaySalesResults = @mysqli_query($conn, $addItemQuery)		//Inserting the item into the database
-											or die('Couldnt add the item'); 
+					$displaySalesResults = @mysqli_query($conn, $addItemQuery)	//Inserting the item into the database
+								or die('Couldnt add the item'); 
 				
 					echo "<p>Item was added successfully!!!</p>";
 				}
