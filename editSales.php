@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<?php
-		include("head.php");
-	?>
+<?php
+	include("head.php");
+?>
 </head>
 <body>
 <?php 
@@ -24,7 +24,7 @@
 
 	if(isset($_POST["cost"]) && isset($_POST["method"]))
 	{
-		if(!empty($_POST["cost"]) && !empty($_POST["method"]))  // Check if the pay method and the total cost are checked
+		if(!empty($_POST["cost"]) && !empty($_POST["method"]))  	// Check if the pay method and the total cost are checked
 		{
 			if(preg_match($cost_pattern, $newCost))
 			{
@@ -32,19 +32,19 @@
 				$saleInfoQuery = "SELECT totalCost, payMethod FROM SaleRecords WHERE saleID = '" . $sale . "'";  //Grabbing the Total Cost and the Pay mehtod from the database
 	
 				$saleInfoResults = @mysqli_query($conn, $saleInfoQuery)
-									or die('Coult not grab sale info');
+						   or die('Coult not grab sale info');
 	
 				while($saleInfo = mysqli_fetch_row($saleInfoResults))
 				{
 					if($newCost != $saleInfo[0]  )  					//If the user has changed the total Cost then update and display an update message
 					{	
 						$updateSaleCostQuery = "UPDATE SaleRecords
-												SET totalCost = '" . $newCost . "' 
-												WHERE saleID=" . $sale . "";
+									SET totalCost = '" . $newCost . "' 
+									WHERE saleID=" . $sale . "";
 	
 	
 						$updateSaleDetailsResult = @mysqli_query($conn, $updateSaleCostQuery)		
-													or die('Couldnt update the sale\'s cost');
+									   or die('Couldnt update the sale\'s cost');
 										
 						echo "<p>The total cost of the sale has been changed!</p>";
 					}					
@@ -53,12 +53,12 @@
 					if($newMethod != $saleInfo[1]  )				//If the user has changed the pay Method then update and display an update message
 					{
 						$updateSaleDetailsQuery = "UPDATE SaleRecords
-													SET payMethod = '" . $newMethod . "' 
-													WHERE saleID=" . $sale . "";
+						SET payMethod = '" . $newMethod . "' 
+						WHERE saleID=" . $sale . "";
 	
 	
 						$updateSaleDetailsResult = @mysqli_query($conn, $updateSaleDetailsQuery)		
-													or die('Couldnt update the sale\'s details');
+									   or die('Couldnt update the sale\'s details');
 										
 						echo "<p>The pay method of the sale has been changed!</p>";
 					}	
@@ -82,16 +82,16 @@
 	
 	
 	$checkAmountQuery = "SELECT  itemID, saleAmt FROM SaleLines	
-								WHERE saleID = ". $sale . "";
+			     WHERE saleID = ". $sale . "";
 								
-	$checkAmountResults = @mysqli_query($conn, $checkAmountQuery)					//Grabbing all the items and their amount of the sale the user is editting
-						or die('Couldnt get the sales item information');
+	$checkAmountResults = @mysqli_query($conn, $checkAmountQuery)			//Grabbing all the items and their amount of the sale the user is editting
+			      or die('Couldnt get the sales item information');
 
 	$index = 0;
 	$storedStockAmounts = array();
 	$stock_pattern = "/^[0-9]+$/";
 	
-	while($checkAmount = mysqli_fetch_row($checkAmountResults))		//Checking if the pre existing item's new stock was a valid input from the editSale form 
+	while($checkAmount = mysqli_fetch_row($checkAmountResults))			//Checking if the pre existing item's new stock was a valid input from the editSale form 
 	{
 		$updateAmount = $_POST["" . $checkAmount[0] . ""];
 		$storedStockAmounts[$index] = $updateAmount; 
@@ -129,27 +129,28 @@
 	
 	$index = 0;
 	$salesItemsDetailsQuery = "SELECT  itemID, saleAmt FROM SaleLines	
-							WHERE saleID = ". $sale . "";
+				   WHERE saleID = ". $sale . "";
 								
-	$salesItemsDetailsResults = @mysqli_query($conn, $salesItemsDetailsQuery)					//Grabbing all the items and their amount of the sale the user is editting
-						or die('Couldnt get the sales item information');
+	$salesItemsDetailsResults = @mysqli_query($conn, $salesItemsDetailsQuery)	      //Grabbing all the items and their amount of the sale the user is editting
+				    or die('Couldnt get the sales item information');
 	
 	
 	
-	if($valid != false && $valid1 != false)						//If both of the pre-existing items and the newly added ones are both valid inputs then..
+	if($valid != false && $valid1 != false)						      //If both of the pre-existing items and the newly added ones are both valid inputs then..
 	{
 		while($salesItemsDetails = mysqli_fetch_row($salesItemsDetailsResults))		//Going through all of the items
 		{
 			if($storedStockAmounts[$index] != $salesItemsDetails[1])		//If the user has changed the item amount then do...
 			{	
-				$getOldItemStockQuery = "SELECT stockAmt FROM items WHERE itemID = '" . $salesItemsDetails[0] . "'";
+				$getOldItemStockQuery = "SELECT stockAmt FROM Items 
+							WHERE itemID = '" . $salesItemsDetails[0] . "'";
 			
 				$getOldItemStockResult = @mysqli_query($conn, $getOldItemStockQuery)		
-										  or die('Couldnt get the old item stock');
+							or die('Couldnt get the old item stock');
 			
 				while($row = mysqli_fetch_row($getOldItemStockResult))
 				{
-					$oldItemStock = $row[0];						// Get the old item Stock
+					$oldItemStock = $row[0];				// Get the old item Stock
 				}
 			
 				if($storedStockAmounts[$index] < $salesItemsDetails[1])		// if the new sale amount from the user is less that the old one, then that means that user is returning items so the general 
@@ -159,46 +160,46 @@
 					$newStockAmount = $oldItemStock + $stockDiffernce;
 				
 					$updateStockAmountQuery = "UPDATE Items 
-												SET stockAmt = '" . $newStockAmount . "'
-												WHERE itemID = '" . $salesItemsDetails[0] . "'";
+								   SET stockAmt = '" . $newStockAmount . "'
+								   WHERE itemID = '" . $salesItemsDetails[0] . "'";
 					
 					$updateStockAmoutResult = @mysqli_query($conn, $updateStockAmountQuery)		//Update the stock amount of the item
-												or die('Couldnt update the item\'s stock');
+								  or die('Couldnt update the item\'s stock');
 					
-																									
+																								
 					
 					$updateSaleAmountQuery = "UPDATE SaleLines 
-											SET saleAmt = '" . $storedStockAmounts[$index] . "'
-											WHERE itemID = '" . $salesItemsDetails[0] . "' AND saleID = '" . $sale . "'"; 		//Update the sale item amount and display the messages
+								  SET saleAmt = '" . $storedStockAmounts[$index] . "'
+								WHERE itemID = '" . $salesItemsDetails[0] . "' AND saleID = '" . $sale . "'"; 		//Update the sale item amount and display the messages
 												
 					$updateSaleAmoutResult = @mysqli_query($conn, $updateSaleAmountQuery)		
-											or die('Couldnt update the sales\'s amount');
+								 or die('Couldnt update the sales\'s amount');
 												
 					echo "<p>Item with ID :" . $salesItemsDetails[0] . " was updated successfully!</p>";	
 				}
-				else 																	//However, if the new sale amount that the user has typed in is higher that the old amount in the database, then deduct the 
+				else 												//However, if the new sale amount that the user has typed in is higher that the old amount in the database, then deduct the 
 				{																								// the difference
 					$stockDiffernce = $storedStockAmounts[$index] - $salesItemsDetails[1];
 					$generalStock = $oldItemStock + $salesItemsDetails[1];
 				
-					if($storedStockAmounts[$index] <= $generalStock)			// If the new sale number the user typed in is not higher than the overall stock then the sale cannot be made
+					if($storedStockAmounts[$index] <= $generalStock)					// If the new sale number the user typed in is not higher than the overall stock then the sale cannot be made
 					{																// because the stock is not enough to support the users demand. The update will not be registered and they website																		
-						$newStockAmount = $oldItemStock - $stockDiffernce;					// Will display an error message. If not it will update the item stock and the sale accordingly 
+						$newStockAmount = $oldItemStock - $stockDiffernce;				// Will display an error message. If not it will update the item stock and the sale accordingly 
 				
 				
 						$updateStockAmountQuery = "UPDATE Items 
-													SET stockAmt = '" . $newStockAmount . "'
-													WHERE itemID = '" . $salesItemsDetails[0] . "'";
+									  SET stockAmt = '" . $newStockAmount . "'
+									   WHERE itemID = '" . $salesItemsDetails[0] . "'";
 									
 						$updateStockAmoutResult = @mysqli_query($conn, $updateStockAmountQuery)		// Updating overall item stock
-													or die('Couldnt update the item\'s stock');
+									  or die('Couldnt update the item\'s stock');
 									
 						$updateSaleAmountQuery = "UPDATE SaleLines 
-												SET saleAmt = '" . $storedStockAmounts[$index] . "'
-												WHERE itemID = '" . $salesItemsDetails[0] . "' AND saleID = '" . $sale . "'";
+									  SET saleAmt = '" . $storedStockAmounts[$index] . "'
+									  WHERE itemID = '" . $salesItemsDetails[0] . "' AND saleID = '" . $sale . "'";
 												
 						$updateSaleAmoutResult = @mysqli_query($conn, $updateSaleAmountQuery)		//Updating the item amount of the editted sale
-												or die('Couldnt update the sales\'s amount');
+									  or die('Couldnt update the sales\'s amount');
 				
 						echo "<p>Item with ID :" . $salesItemsDetails[0] . " was updated successfully!</p>";
 					}
@@ -221,39 +222,39 @@
 		{
 			$itemAmount = $_POST["itemAmt" . $i . ""];
 			$itemInformationQuery = "SELECT itemName, stockAmt FROM Items	
-									WHERE itemID = ". $itemIdArray[$i] . "";
+						WHERE itemID = ". $itemIdArray[$i] . "";
 								
 			$itemInformationResult = @mysqli_query($conn, $itemInformationQuery)					
-										or die('Couldnt get the item\'s information');
+						or die('Couldnt get the item\'s information');
 				
 			while($itemInformation = mysqli_fetch_row($itemInformationResult))
 			{	
-				if($itemInformation[1] > $itemAmount)  					//Checks if the amount of the new item is less than the available stock
+				if($itemInformation[1] > $itemAmount)  						//Checks if the amount of the new item is less than the available stock
 				{
 					$preExistingItemQuery = "SELECT saleAmt FROM SaleLines	
-											WHERE itemID = ". $itemIdArray[$i] . " AND saleID = " . $sale . "";
+								WHERE itemID = ". $itemIdArray[$i] . " AND saleID = " . $sale . "";
 					
 					$preExistingItemResult = @mysqli_query($conn, $preExistingItemQuery)		
-												or die('Couldnt search for the new item in the sale');		//checks to see if the new item the user is adding exists in the original sale
+								or die('Couldnt search for the new item in the sale');		//checks to see if the new item the user is adding exists in the original sale
 												
 					$existence = mysqli_fetch_row($preExistingItemResult);
 					$difference = $itemInformation[1] - $itemAmount;
 					
 		
-					if($existence[0] == NULL)						//If it doesnt, then the code with insert the details of that item into the SaleLines table of the datebase 
+					if($existence[0] == NULL)								//If it doesnt, then the code with insert the details of that item into the SaleLines table of the datebase 
 					{	
 						$InsertStockAmountQuery = "INSERT INTO SaleLines (saleID, itemID, saleAmt) 
-												VALUES ('" . $sale . "', '" . $itemIdArray[$i] . "', '" . $itemAmount . "')";
+									   VALUES ('" . $sale . "', '" . $itemIdArray[$i] . "', '" . $itemAmount . "')";
 					
 						$InsertStockAmoutResult = @mysqli_query($conn, $InsertStockAmountQuery)		
-													or die('Couldnt insert new item into the sale');
+									  or die('Couldnt insert new item into the sale');
 
 						$updateStockAmount2Query = "UPDATE Items 
-													SET stockAmt = '" . $difference . "'
-													WHERE itemID = '" . $itemIdArray[$i] . "'";
+									    SET stockAmt = '" . $difference . "'
+									    WHERE itemID = '" . $itemIdArray[$i] . "'";
 												
-						$updateStockAmount2Result = @mysqli_query($conn, $updateStockAmount2Query)		// Updating overall item stock
-													or die('Couldnt update the item\'s stock');
+						$updateStockAmount2Result = @mysqli_query($conn, $updateStockAmount2Query)	 // Updating overall item stock
+									    or die('Couldnt update the item\'s stock');
 													
 						echo"<p>Item with ID:" . $itemIdArray[$i] . " - " . $itemInformation[0] . "  was successfully inserted into the sale!!!</p>";
 					}
@@ -262,18 +263,18 @@
 						$addition = $existence[0] + $itemAmount;
 						
 						$updateSaleAmountQuery = "UPDATE SaleLines 
-													SET saleAmt = '" . $addition . "'
-													WHERE itemID = '" . $itemIdArray[$i] . "'";
+									  SET saleAmt = '" . $addition . "'
+									  WHERE itemID = '" . $itemIdArray[$i] . "'";
 						
 						$updateSaleAmountResult = @mysqli_query($conn, $updateSaleAmountQuery)		// Updating item sale amount
-													or die('Couldnt update the item\'s stock');
+									  or die('Couldnt update the item\'s stock');
 						
 						$updateStockAmount2Query = "UPDATE Items 
-													SET stockAmt = '" . $difference . "'
-													WHERE itemID = '" . $itemIdArray[$i] . "'";
+									    SET stockAmt = '" . $difference . "'
+									    WHERE itemID = '" . $itemIdArray[$i] . "'";
 						
 						$updateStockAmount2Result = @mysqli_query($conn, $updateStockAmount2Query)		// Updating overall item stock
-													or die('Couldnt update the item\'s stock');
+									    or die('Couldnt update the item\'s stock');
 													
 						echo"<p>Item with ID:" . $itemIdArray[$i] . " - " . $itemInformation[0] . "  was successfully updated into the sale!!!</p>";
 					}
