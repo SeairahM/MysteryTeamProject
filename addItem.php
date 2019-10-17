@@ -7,8 +7,9 @@
 	?>
 </head>
 <body>
+	<?php include("navigation.php"); ?>
+<div>
 <?php 
-	include("navigation.php");
 	require_once("dbconn.php");
 	$conn = $DBConn;
 	
@@ -24,6 +25,7 @@
 				
 	echo "<p>Item was added successfully!!!</p>";
 ?>
+</div>
 <footer>
 <?php
 	include("footer.php");
