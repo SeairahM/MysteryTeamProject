@@ -7,7 +7,9 @@
 ?>
 </head>
 <body>
-<?php include("navigation.php"); ?>
+<?php 
+	include("navigation.php"); 
+?>
 <div>
 <?php 
 	require_once("dbconn.php");
@@ -15,12 +17,12 @@
 
 	if(isset($_POST["edit"]))
 	{
-		$sale = $_POST["edit"];		//if the user is clicking the edit button from the display Sales page, set and get the right variables
+		$sale = $_POST["edit"];	//if the user is clicking the edit button from the display Sales page, set and get the right variables
 		$newItems = 0;
 	}
 	else
 	{
-		if(isset($_POST["addItem"]))		//else if the user is clicking the add new button  set the right variables
+		if(isset($_POST["addItem"]))	//else if the user is clicking the add new button  set the right variables
 		{	
 			$sale = $_POST["addItem"];
 			$increment = $_POST["increment"];
@@ -30,10 +32,10 @@
 		{
 			$sale = $_POST["removeItem"];
 			$decrement = $_POST["decrement"];
-			if($decrement == 0)							//If the user tries to click the remove new item button 
-			{											//when there are no new items to remove, display and error message. Else just procceed witht the removal
-					echo "<p>You've got no new items to remove!</p>";  
-					$newItems = 0;
+			if($decrement == 0)					//If the user tries to click the remove new item button 
+			{								//when there are no new items to remove, display and error message. Else just procceed witht the removal
+				echo "<p>You've got no new items to remove!</p>";  
+				$newItems = 0;
 			}
 			else						
 			{	
@@ -42,7 +44,7 @@
 		}
 		else
 		{
-			$sale = $_POST["saleOfItem"];			//else that means that the user has clicked on the delete pre-existing item button
+			$sale = $_POST["saleOfItem"];		//else that means that the user has clicked on the delete pre-existing item button
 			$saleItemsArray = array();
 			$index = 0;
 			
@@ -50,7 +52,7 @@
 			$checkIfEmptyQuery = "SELECT itemID FROM salelines WHERE saleID = '" . $sale . "'";
 			
 			$checkIfEmptyResult = @mysqli_query($conn, $checkIfEmptyQuery)		//Getting the sale information of the sale the user clicked to edit
-								or die('Couldnt check if it\'s empty');
+					      or die('Couldnt check if it\'s empty');
 								
 			while($checkIfEmpty = mysqli_fetch_row($checkIfEmptyResult))
 			{
@@ -64,14 +66,14 @@
 				$itemToDelete = $_POST["deleteItem"];
 			
 				$deleteItemQuery = "DELETE FROM SaleLines
-									WHERE itemID = '" . $itemToDelete . "' AND saleID = '" . $sale . "'";			
+						    WHERE itemID = '" . $itemToDelete . "' AND saleID = '" . $sale . "'";			
 							
 				echo "<p>Item with ID :" . $itemToDelete . " was deleted successfully! </p>";
 					
 				$deleteItemResult = @mysqli_query($conn, $deleteItemQuery)		
-									or die('Couldnt delete the item from the sale1');
+						    or die('Couldnt delete the item from the sale1');
 			}
-			else					//else display an error message saying that you cant delete the last item in the sale
+			else						//else display an error message saying that you cant delete the last item in the sale
 			{	
 				$newItems = 0;
 				echo "<p>You cant delete the last item of a sale!!!</p>";
@@ -81,22 +83,22 @@
 	
 	
 	$saleItemsQuery = "SELECT SaleLines.itemID, Items.itemName, SaleLines.saleAmt FROM SaleLines 
-								INNER JOIN Items
-								ON SaleLines.itemID=Items.itemID    
-								WHERE saleID = '". $sale . "'";
+			   INNER JOIN Items
+     			   ON SaleLines.itemID=Items.itemID    
+			   WHERE saleID = '". $sale . "'";
 								
 	$saleItemsResults = @mysqli_query($conn, $saleItemsQuery)		//Getting the items and their details of the sale the user clicked to edit
-						or die('Couldnt get the sale details2');
+			    or die('Couldnt get the sale details2');
 	
 	echo "<h2>Editting Sale No:$sale</h2>
-		  <h3>Deleting Sales Items:</h3>";
+	      <h3>Deleting Sales Items:</h3>";
 	
 	while($saleItems = mysqli_fetch_row($saleItemsResults))			//Display the items of the sale and a button to delete them for the sale 
 	{
 		echo " <form action = \"editSalesForm.php\" method = \"post\">
 				<label>ItemID:" . $saleItems[0] . " " . $saleItems[1] . "</label><br>
 				<label>Quantity: " . $saleItems[2] . "</label><br>
-			    <input type=\"hidden\" name=\"saleOfItem\" value=\"" . $sale . "\" />
+			    	<input type=\"hidden\" name=\"saleOfItem\" value=\"" . $sale . "\" />
 				<input type =\"hidden\" name =\"deleteItem\" value = \"" . $saleItems[0] . "\"  />  		
 				<input type =\"submit\" value = \"Delete Sale Item\" />
 			  </form>
@@ -111,7 +113,7 @@
 	$saleRecordQuery = "SELECT * FROM SaleRecords WHERE saleID = '" . $sale . "'";
 	
 	$saleRecordResult = @mysqli_query($conn, $saleRecordQuery)		//Getting the sale information of the sale the user clicked to edit
-							or die('Couldnt get the sale details1');
+			    or die('Couldnt get the sale details1');
 	
 	while($saleDetails = mysqli_fetch_row($saleRecordResult))
 	{
@@ -131,9 +133,9 @@
 
 	
 	$saleItemsResults2 = @mysqli_query($conn, $saleItemsQuery)		//Getting the items and their details of the sale the user clicked to edit
-						or die('Couldnt get the sale details2');
+			     or die('Couldnt get the sale details2');
 	
-	while($saleItems2 = mysqli_fetch_row($saleItemsResults2))			//Printing a textbox and for every item in the a sale with a textbox so the user can edit.
+	while($saleItems2 = mysqli_fetch_row($saleItemsResults2))		//Printing a textbox and for every item in the a sale with a textbox so the user can edit.
 	{
 		echo "<label>ItemID:" . $saleItems2[0] . " " . $saleItems2[1] . "</label><br>
 			  <label>New Sale Quantity: </label>
@@ -142,12 +144,12 @@
 	}
 	
 	
-	for($i = 0; $i < $newItems; $i++) 				//Prints a textbox and a dropdown box for every time we press the add new Item button
+	for($i = 0; $i < $newItems; $i++) 					//Prints a textbox and a dropdown box for every time we press the add new Item button
 	{
 		$availableItemsQuery = "SELECT itemID, itemName, stockAmt FROM Items";
 	
 		$availableItemsResult = @mysqli_query($conn, $availableItemsQuery)		
-							or die('Couldnt get the sale details3');
+					or die('Couldnt get the sale details3');
 		
 		
 		echo "<label>New Item ID</label>";
