@@ -105,11 +105,12 @@
      <th>Item ID</th>
      <th>Item Name</th>
      <th>Number of Sales</th>
+     <th>Number of Items Sold</th>
      <th>Remaining Stock</th>
      <th>DateTime</th>
     </tr>
     <?php
-     $query2 = "SELECT itemCategory, itemID, itemName, dateTime, stockAmt, COUNT(*) AS counts FROM SaleLines NATURAL JOIN SaleRecords
+     $query2 = "SELECT itemCategory, itemID, itemName, dateTime, stockAmt, saleAmt, COUNT(*) AS counts FROM SaleLines NATURAL JOIN SaleRecords
      NATURAL JOIN Items WHERE MONTH(dateTime) = ". $filtermonth. " AND YEAR(dateTime) = ". $filteryear. $filtercat. " GROUP BY itemID";
      $results = mysqli_query($conn,$query2);
 
@@ -120,14 +121,16 @@
       $name = $row['itemName'];
       $sAmount = $row['counts'];
       $ItemAmount = $row['stockAmt'];
+      $saleAMT = $row["saleAmt"];
       $time = $row['dateTime'];
-      $record_arr[] = array($cat,$id,$name,$sAmount,$ItemAmount,$time);
+      $record_arr[] = array($cat,$id,$name,$sAmount,$saleAMT, $ItemAmount,$time);
    ?>
       <tr>
-      <td><?php echo $cat; ?></td>
+       <td><?php echo $cat; ?></td>
        <td><?php echo $id; ?></td>
        <td><?php echo $name; ?></td>
        <td><?php echo $sAmount; ?></td>
+       <td><?php echo $saleAMT;?></td>
        <td><?php echo $ItemAmount?></td>
        <td><?php echo $time; ?></td>
       </tr>
@@ -143,5 +146,79 @@
   <textarea name='export_data' style='display: none;'><?php echo $serialize_record_arr; ?></textarea>
  </form>
 </div>
+
+<div>
+<table border='1' style='border-collapse:collapse;'>
+<h2>Last Month Sales</h2>
+<tr>
+     <th>Category</th>
+     <th>Number of Sales</th>
+     <th>Number of Items Sold</th>
+     <th>Remaining Stock</th>
+     <th>DateTime</th>
+    </tr>
+<?php
+//get last 30 days sales ect
+$query3 = "SELECT itemCategory, itemID, itemName, dateTime, stockAmt, saleAmt, COUNT(*) AS counts FROM SaleLines NATURAL JOIN SaleRecords
+NATURAL JOIN Items WHERE datetime BETWEEN NOW() - INTERVAL 30 DAY AND NOW() GROUP BY itemID";
+
+$results3 = mysqli_query($conn,$query3);
+  $record_arr = array();
+     while($row = mysqli_fetch_array($results3)){
+      $cat = $categoryNames[$row['itemCategory'] - 1];
+      $sAmount = $row['counts'];
+      $ItemAmount = $row['stockAmt'];
+      $saleAMT = $row["saleAmt"];
+      $time = $row['dateTime'];
+      $record_arr[] = array($cat,$sAmount,$saleAMT, $ItemAmount,$time);
+   ?>
+      <tr>
+       <td><?php echo $cat; ?></td>
+       <td><?php echo $sAmount; ?></td>
+       <td><?php echo $saleAMT;?></td>
+       <td><?php echo $ItemAmount?></td>
+       <td><?php echo $time; ?></td>
+      </tr>
+      <?php
+      }
+    mysqli_free_result($results3);
+  ?>
+</div>
+<div>
+<table border='1' style='border-collapse:collapse;'>
+<h2>Next Month Prediction</h2>
+<tr>
+     <th>Category</th>
+     <th>Item Name</th>
+     <th>Predicted Sales</th>
+     <th>Predicted left over stock based on current stock levels</th>
+    </tr>
+<?php
+//get last 30 days sales ect
+$query3 = "SELECT itemCategory, itemName, stockAmt-saleAmt as stockAmt, count(saleAmt) AS saleAmt FROM SaleLines NATURAL JOIN SaleRecords
+NATURAL JOIN Items WHERE datetime BETWEEN NOW() - INTERVAL 30 DAY AND NOW() GROUP BY itemid";
+
+$results3 = mysqli_query($conn,$query3);
+  $record_arr = array();
+     while($row = mysqli_fetch_array($results3)){
+      $cat = $categoryNames[$row['itemCategory'] - 1];
+      $name = $row['itemName'];
+      $ItemAmount = $row['stockAmt'];
+      $saleAMT = $row["saleAmt"];
+      $record_arr[] = array($cat,$saleAMT, $ItemAmount);
+
+   ?>
+      <tr>
+       <td><?php echo $cat; ?></td>
+       <td><?php echo $name; ?></td>
+       <td><?php echo $saleAMT;?></td>
+       <td><?php echo $ItemAmount;?></td>
+      </tr>
+      <?php
+      }
+    mysqli_free_result($results3);
+  ?>
+</div>
+
 </body>
 </html>
