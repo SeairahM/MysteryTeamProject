@@ -49,7 +49,7 @@
 			$index = 0;
 			
 			
-			$checkIfEmptyQuery = "SELECT itemID FROM salelines WHERE saleID = '" . $sale . "'";
+			$checkIfEmptyQuery = "SELECT itemID FROM SaleLines WHERE saleID = '" . $sale . "'";
 			
 			$checkIfEmptyResult = @mysqli_query($conn, $checkIfEmptyQuery)		//Getting the sale information of the sale the user clicked to edit
 					      or die('Couldnt check if it\'s empty');
