@@ -229,7 +229,7 @@
 				
 			while($itemInformation = mysqli_fetch_row($itemInformationResult))
 			{	
-				if($itemInformation[1] > $itemAmount)  						//Checks if the amount of the new item is less than the available stock
+				if($itemInformation[1] >= $itemAmount)  						//Checks if the amount of the new item is less than the available stock
 				{
 					$preExistingItemQuery = "SELECT saleAmt FROM SaleLines	
 								WHERE itemID = ". $itemIdArray[$i] . " AND saleID = " . $sale . "";
