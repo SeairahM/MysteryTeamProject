@@ -42,7 +42,7 @@
 			
 				if($valid == true)
 				{	
-					$addItemQuery = "INSERT INTO items (itemName, itemNote, itemCategory, stockAmt, itemPrice) 
+					$addItemQuery = "INSERT INTO Items (itemName, itemNote, itemCategory, stockAmt, itemPrice) 
 							VALUES('$itemName', '$itemNote', '$itemCategory', '$itemStock', '$itemPrice')";
 		
 					$displaySalesResults = @mysqli_query($conn, $addItemQuery)	//Inserting the item into the database
