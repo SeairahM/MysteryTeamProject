@@ -4,6 +4,7 @@
 <head>
   <?php include("head.php"); ?>
   <link rel="stylesheet" href="PHP_SR_StyleSheet.css">
+  <script src="saveSalesScript.js"></script>
 </head>
 <body>
 <?php include("navigation.php"); ?>
@@ -21,7 +22,7 @@
   "'". $_POST["totalcost"]. "', '". $_POST["paymethod"]. "', '". $_POST["datetime"]. "')";
   $result = $conn->query($sql);
   if ($result) {
-    echo "<p>Sale record saved.</p>";
+    echo "<p class=\"errmsg\">Sale record saved.</p>";
     //insert sale lines
     $linesnum = (int)$_POST['linesnum'];
     $i = 0;
@@ -32,7 +33,7 @@
       $saleID = $row["saleID"];
     }
     if ($result) {
-      echo "<p>Sale ID is ". $saleID. ".</p>";
+      echo "<p class=\"errmsg\">Sale ID is ". $saleID. ".</p>";
       mysqli_free_result($result);
     }
     //insert sale line(s)
@@ -47,7 +48,7 @@
         echo "<p>Sale line saved.</p>";
       }
       else {
-        echo "<p>Failed to save sale line of item number". $_POST[$currentItemID]. ", please contact tech support.</p>";
+        echo "<p class=\"errmsg\">Failed to save sale line of item number". $_POST[$currentItemID]. ", please contact tech support.</p>";
       }
       $i += 1;
       //modify item amount for each sale line
@@ -58,15 +59,14 @@
         echo "<p>Sale stock updated.</p>";
       }
       else {
-        echo "<p>Failed to update stock of item number ". $_POST[$currentItemID] . ", please contact tech support.</p>";
+        echo "<p class=\"errmsg\">Failed to update stock of item number ". $_POST[$currentItemID] . ", please contact tech support.</p>";
       }
     }
-    echo "<p>". $i. " Sale Lines processed.</p>";
+    echo "<p class=\"errmsg\">". $i. " Sale Lines processed.</p>";
   }
   else {
-    echo "<p>Failed to save sale record.</p>";
+    echo "<p class=\"errmsg\">Failed to save sale record.</p>";
   }
-  echo "<a href=\"addSalesOrStock.php\">Back to Add Stock/Sales</a>";
 ?>
 </div>
 <footer>
