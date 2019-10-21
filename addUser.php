@@ -48,15 +48,7 @@ if(isset($_POST['username']) && isset($_POST['password']))
     ?>
 </head>
 <body>
-	<header>
-		<img src="images/PHP_SR_logo.png" alt="Logo"/>
-		<a href="signout.php">SIGN-OUT</a>
-		<aside>
-        <?php
-            include "navigation.php";
-        ?>
-		</aside>
-	</header>
+    <?php include "navigation.php"; ?>
 
 	<div>
         <?php         
