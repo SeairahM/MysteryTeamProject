@@ -48,8 +48,6 @@ if(isset($_POST['username']))
         <?php
             include "navigation.php";
         ?>
-	</header>
-
 	<div>
         <?php         
            if ($displayError)
@@ -89,6 +87,8 @@ if(isset($_POST['username']))
             </select><br/><br/>           
             <input type="submit" value="Delete User"/><br/>
         </form>
+        <br/>
+        <a href='addUser.php'>ADD USERS</a>
 	</div>
 
 	<footer>

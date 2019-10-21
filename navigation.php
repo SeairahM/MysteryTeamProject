@@ -20,10 +20,13 @@ echo "<header id='navigation'>
 			    </button>
 			    <div class='dropdown-content'>
 			    <!-- ADD ITEM PAGE LINKS HERE!!! -->
-			      <a href='addItemForm.php'>ADD ITEMS</a>
+						<a href='addItemForm.php'>ADD ITEMS</a>
+						<a href='displayItems.php'>DISPLAY ITEMS</a>
+						<a href='addCategory.php'>ADD CATEGORY</a>
+						<a href='deleteCategory.php'>DELETE CATEGORY</a>
 			    </div>
-  			</div> 
-  			<a href='#news'>USERS</a>
+			</div> 		
+			<a href='addUser.php'>USERS</a>			
 		</nav>
 	</header>";
 ?>

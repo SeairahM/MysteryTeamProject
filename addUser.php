@@ -48,7 +48,9 @@ if(isset($_POST['username']) && isset($_POST['password']))
     ?>
 </head>
 <body>
-    <?php include "navigation.php"; ?>
+        <?php
+            include "navigation.php";
+        ?>
 
 	<div>
         <?php         
@@ -83,6 +85,8 @@ if(isset($_POST['username']) && isset($_POST['password']))
             <input type="submit" value="Add User"/>&nbsp;
             <input type="reset" value="Clear"/><br/>
         </form>
+        <br/>
+        <a href='deleteUser.php'>DELETE USERS</a>
 	</div>
 
 	<footer>
