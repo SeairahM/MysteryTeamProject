@@ -146,8 +146,11 @@
   <textarea name='export_data' style='display: none;'><?php echo $serialize_record_arr; ?></textarea>
  </form>
 </div>
-
+<!-- Monthly sales
+New form for csv -> accesses downloadMonthReport.php
+ -->
 <div>
+<form method='post' action='downloadMonthReport.php'>
 <table border='1' style='border-collapse:collapse;'>
 <h2>Last Month Sales</h2>
 <tr>
@@ -158,19 +161,19 @@
      <th>DateTime</th>
     </tr>
 <?php
+
 //get last 30 days sales ect
 $query3 = "SELECT itemCategory, itemID, itemName, dateTime, stockAmt, saleAmt, COUNT(*) AS counts FROM SaleLines NATURAL JOIN SaleRecords
 NATURAL JOIN Items WHERE datetime BETWEEN NOW() - INTERVAL 30 DAY AND NOW() GROUP BY itemID";
-
 $results3 = mysqli_query($conn,$query3);
-  $record_arr = array();
+  $record_arr1 = array();
      while($row = mysqli_fetch_array($results3)){
       $cat = $categoryNames[$row['itemCategory'] - 1];
       $sAmount = $row['counts'];
       $ItemAmount = $row['stockAmt'];
       $saleAMT = $row["saleAmt"];
       $time = $row['dateTime'];
-      $record_arr[] = array($cat,$sAmount,$saleAMT, $ItemAmount,$time);
+      $record_arr1[] = array($cat,$sAmount,$saleAMT, $ItemAmount);
    ?>
       <tr>
        <td><?php echo $cat; ?></td>
@@ -183,41 +186,99 @@ $results3 = mysqli_query($conn,$query3);
       }
     mysqli_free_result($results3);
   ?>
+  </table>
+  <input type='submit' value='Export' name='Export'>
+   <?php
+    $serialize_record_arr1 = serialize($record_arr1);
+   ?>
+  <textarea name='export_data' style='display: none;'><?php echo $serialize_record_arr1; ?></textarea>
+ </form>
 </div>
+
+
+<!--Item Predictions -->
 <div>
+
+<form method='post' action='downloadPredictionItems.php'>
 <table border='1' style='border-collapse:collapse;'>
 <h2>Next Month Prediction</h2>
+<h4> Grouped by Items</h4>
+<p>In the "Stock To Be Bought" columns, the negative items mean you have enough in stock.</p>
+<p>The positive number is how much you need to buy for the next month.</p>
 <tr>
-     <th>Category</th>
+     
      <th>Item Name</th>
-     <th>Predicted Sales</th>
-     <th>Predicted left over stock based on current stock levels</th>
+     <th>Predicted Items to be Sold</th>
+     <th>Stock To Be Bought</th>
     </tr>
 <?php
-//get last 30 days sales ect
-$query3 = "SELECT itemCategory, itemName, stockAmt-saleAmt as stockAmt, count(saleAmt) AS saleAmt FROM SaleLines NATURAL JOIN SaleRecords
-NATURAL JOIN Items WHERE datetime BETWEEN NOW() - INTERVAL 30 DAY AND NOW() GROUP BY itemid";
+// gets average sales
+$query3 = "SELECT itemName, AVG(saleAmt) as predictedItemSales, saleAmt-stockAmt as toBuy FROM Items NATURAL JOIN saleLines NATURAL JOIN SaleRecords GROUP BY itemName, MONTH(dateTime)";
 
 $results3 = mysqli_query($conn,$query3);
-  $record_arr = array();
+  $record_arr2 = array();
+  
      while($row = mysqli_fetch_array($results3)){
-      $cat = $categoryNames[$row['itemCategory'] - 1];
       $name = $row['itemName'];
-      $ItemAmount = $row['stockAmt'];
-      $saleAMT = $row["saleAmt"];
-      $record_arr[] = array($cat,$saleAMT, $ItemAmount);
+      $predicted = $row['predictedItemSales'];
+      $itemNeeded = $row['toBuy'];
+      $record_arr2[] = array($name,$predicted, $itemNeeded);
 
    ?>
       <tr>
-       <td><?php echo $cat; ?></td>
        <td><?php echo $name; ?></td>
-       <td><?php echo $saleAMT;?></td>
-       <td><?php echo $ItemAmount;?></td>
+       <td><?php echo $predicted; ?></td>
+       <td><?php echo $itemNeeded;?></td>
       </tr>
       <?php
       }
     mysqli_free_result($results3);
   ?>
+  </table>
+  <input type='submit' value='Export' name='Export'>
+   <?php
+    $serialize_record_arr2 = serialize($record_arr2);
+   ?>
+  <textarea name='export_data' style='display: none;'><?php echo $serialize_record_arr2; ?></textarea>
+ </form>
+</div>
+
+<!--Category Predictions -->
+
+<div>
+<form method='post' action='downloadCategoryPrediction.php'>
+<table border='1' style='border-collapse:collapse;'>
+<h4>Grouped by Category</h4>
+<tr>
+     <th>Category</th>
+     <th>Predicted Items to be Sold</th>
+    </tr>
+<?php
+//get last 30 days sales ect
+$query3 = "SELECT itemCategory, AVG(saleAmt) as predictedItemSales FROM Items NATURAL JOIN saleLines NATURAL JOIN SaleRecords GROUP BY itemCategory, MONTH(dateTime)";
+
+$results3 = mysqli_query($conn,$query3);
+  $record_arr3 = array();
+     while($row = mysqli_fetch_array($results3)){
+      $cat = $categoryNames[$row['itemCategory'] - 1];
+      $predicted = $row['predictedItemSales'];
+      $record_arr3[] = array($cat,$predicted);
+   ?>
+      <tr>
+       <td><?php echo $cat; ?></td>
+       <td><?php echo $predicted; ?></td>
+      </tr>
+      <?php
+      }
+    mysqli_free_result($results3);
+  ?>
+  </table>
+  <input type='submit' value='Export' name='Export'>
+   <?php
+    $serialize_record_arr3 = serialize($record_arr3);
+   ?>
+  <textarea name='export_data' style='display: none;'><?php echo $serialize_record_arr3; ?></textarea>
+ </form>
 </div>
 
 </body>
