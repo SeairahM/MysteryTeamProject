@@ -2,7 +2,6 @@
 <html lang='en'>
 <head>
   <?php include("head.php"); ?>
-  <link rel="stylesheet" href="PHP_SR_StyleSheet.css">
   <script src="reportScript.js"></script>
 </head>
   <?php
