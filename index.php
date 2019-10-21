@@ -5,9 +5,6 @@ include("head.php")
 ?>
 <link rel="stylesheet" type="text/css" href="sign_in.css">
 </head>
-<body>
-    <?php include("navigation.php"); ?>
-<div>
 <?php
     require_once("dbconn.php");
     session_start();
@@ -55,7 +52,9 @@ include("head.php")
 
  function  displayLoginPage($displayError = FALSE){
     echo "<form action=\"index.php\" method=\"POST\">
-        <div class=\"container\">";
+        <div class=\"container\">
+        <img src=\"images/PHP_SR_logo.png\" alt=\"PHP LOGO\" width=\"400\"/>
+        <br/>";
         if ($displayError == TRUE){
             echo "<label id=\"error\">Incorrect Username and or Password Entered!</label><br/>";
         }
@@ -63,18 +62,16 @@ include("head.php")
             <input type=\"text\" placeholder=\"Enter Username\" name=\"User\" required>
         
             <label for=\"pass\">Password</label>
-            <input type=\"password\" placeholder=\"Enter Password\" name=\"Pass\" required>
-        
+            <input type=\"password\" placeholder=\"Enter Password\" name=\"Pass\" required>        
             <button type=\"submit\">Login</button>
+            <br/>
         </div>
     </form>";
  }
 ?>
-</div>
 <footer id="signincss">
 <?php
 include("footer.php");
 ?>
 </footer>
-</body>
 </html>
