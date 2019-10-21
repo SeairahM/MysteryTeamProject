@@ -46,16 +46,9 @@ if(isset($_POST['name']))
     ?>
 </head>
 <body>
-	<header>
-		<img src="images/PHP_SR_logo.png" alt="Logo"/>
-		<a href="signout.php">SIGN-OUT</a>
-		<aside>
         <?php
             include "navigation.php";
         ?>
-		</aside>
-	</header>
-
 	<div>
         <?php         
            if ($displayError)
