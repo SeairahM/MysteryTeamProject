@@ -39,7 +39,7 @@ include("head.php")
         //check to see if there is an active session
         if (isset($_SESSION["user_id"])){         
                 //there is an active session so redirect to "home" page as they are already signed in       
-                header("Location: add_sales.php"); //CHANGE REDIRECT TO REFLECT MAIN HOME PAGE FOR SIGNED IN USER ONCE COMPLETE       
+                header("Location: addSalesOrStock.php"); //CHANGE REDIRECT TO REFLECT MAIN HOME PAGE FOR SIGNED IN USER ONCE COMPLETE       
         }
         //No Active session is there so clear and initialise
         else{
