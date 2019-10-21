@@ -1,9 +1,7 @@
 <!DOCTYPE=html>
 <html lang='en'>
 <head>
-  <?php
-    include("head.php");
-  ?>
+  <?php include("head.php"); ?>
   <script src="reportScript.js"></script>
 </head>
   <?php
@@ -64,7 +62,7 @@
       ?>
       <!--text input for year, prefill current year-->
       <label for='repyear'> in </label>
-      <input type='text' id='repyear' name='rep_year' value='<?php echo $currentyear; ?>' pattern="\d{4}" placeholder="YYYY" required='required' />
+      <input type='text' name='rep_year' id='repyear' value='<?php echo $currentyear; ?>' pattern="\d{4}" placeholder="YYYY" required='required' />
       <!--submit-->
       <input type='submit' value='Generate report' />
     </select>
@@ -102,9 +100,9 @@
    ?>
 
  <form method='post' action='download.php'>
-  <input hidden type='text' name='repmonth' value='<?php echo $filtermonth; ?>' />
-  <input hidden type='text' name='repyear' value='<?php echo $filteryear; ?>' />
-  <input hidden type='text' name='repcat' value='<?php if ($filtercat == "") {echo "Nofilter";} else {echo $displayCat;} ?>' />
+   <input hidden type='text' name='repmonth' value='<?php echo $filtermonth; ?>' />
+   <input hidden type='text' name='repyear' value='<?php echo $filteryear; ?>' />
+   <input hidden type='text' name='repcat' value='<?php if ($filtercat == "") {echo "Nofilter";} else {echo $displayCat;} ?>' />
 
   <table border='1' style='border-collapse:collapse;'>
     <tr>
@@ -126,10 +124,10 @@
       $name = $row['itemName'];
       $sAmount = $row['counts'];
       $ItemAmount = $row['stockAmt'];
-      $record_arr[] = array($cat,$id,$name,$sAmount,$ItemAmount);
+      $record_arr[] = array($cat,$id,$name,$sAmount, $ItemAmount);
    ?>
       <tr>
-      <td><?php echo $cat; ?></td>
+       <td><?php echo $cat; ?></td>
        <td><?php echo $id; ?></td>
        <td><?php echo $name; ?></td>
        <td><?php echo $sAmount; ?></td>
@@ -147,5 +145,140 @@
   <textarea name='export_data' style='display: none;'><?php echo $serialize_record_arr; ?></textarea>
  </form>
 </div>
+<!-- Monthly sales
+New form for csv -> accesses downloadMonthReport.php
+ -->
+<div>
+<form method='post' action='downloadMonthReport.php'>
+<table border='1' style='border-collapse:collapse;'>
+<h2>Last Month Sales</h2>
+<tr>
+     <th>Category</th>
+     <th>Number of Sales</th>
+     <th>Number of Items Sold</th>
+     <th>Remaining Stock</th>
+     <th>DateTime</th>
+    </tr>
+<?php
+
+//get last 30 days sales ect
+$query3 = "SELECT itemCategory, itemID, itemName, dateTime, stockAmt, saleAmt, COUNT(*) AS counts FROM SaleLines NATURAL JOIN SaleRecords
+NATURAL JOIN Items WHERE datetime BETWEEN NOW() - INTERVAL 30 DAY AND NOW() GROUP BY itemID";
+$results3 = mysqli_query($conn,$query3);
+  $record_arr1 = array();
+     while($row = mysqli_fetch_array($results3)){
+      $cat = $categoryNames[$row['itemCategory'] - 1];
+      $sAmount = $row['counts'];
+      $ItemAmount = $row['stockAmt'];
+      $saleAMT = $row["saleAmt"];
+      $time = $row['dateTime'];
+      $record_arr1[] = array($cat,$sAmount,$saleAMT, $ItemAmount);
+   ?>
+      <tr>
+       <td><?php echo $cat; ?></td>
+       <td><?php echo $sAmount; ?></td>
+       <td><?php echo $saleAMT;?></td>
+       <td><?php echo $ItemAmount?></td>
+       <td><?php echo $time; ?></td>
+      </tr>
+      <?php
+      }
+    mysqli_free_result($results3);
+  ?>
+  </table>
+  <input type='submit' value='Export' name='Export'>
+   <?php
+    $serialize_record_arr1 = serialize($record_arr1);
+   ?>
+  <textarea name='export_data' style='display: none;'><?php echo $serialize_record_arr1; ?></textarea>
+ </form>
+</div>
+
+
+<!--Item Predictions -->
+<div>
+
+<form method='post' action='downloadPredictionItems.php'>
+<table border='1' style='border-collapse:collapse;'>
+<h2>Next Month Prediction</h2>
+<h4> Grouped by Items</h4>
+<p>In the "Stock To Be Bought" columns, the negative items mean you have enough in stock.</p>
+<p>The positive number is how much you need to buy for the next month.</p>
+<tr>
+
+     <th>Item Name</th>
+     <th>Predicted Items to be Sold</th>
+     <th>Stock To Be Bought</th>
+    </tr>
+<?php
+// gets average sales
+$query3 = "SELECT itemName, AVG(saleAmt) as predictedItemSales, saleAmt-stockAmt as toBuy FROM Items NATURAL JOIN saleLines NATURAL JOIN SaleRecords GROUP BY itemName, MONTH(dateTime)";
+
+$results3 = mysqli_query($conn,$query3);
+  $record_arr2 = array();
+
+     while($row = mysqli_fetch_array($results3)){
+      $name = $row['itemName'];
+      $predicted = $row['predictedItemSales'];
+      $itemNeeded = $row['toBuy'];
+      $record_arr2[] = array($name,$predicted, $itemNeeded);
+
+   ?>
+      <tr>
+       <td><?php echo $name; ?></td>
+       <td><?php echo $predicted; ?></td>
+       <td><?php echo $itemNeeded;?></td>
+      </tr>
+      <?php
+      }
+    mysqli_free_result($results3);
+  ?>
+  </table>
+  <input type='submit' value='Export' name='Export'>
+   <?php
+    $serialize_record_arr2 = serialize($record_arr2);
+   ?>
+  <textarea name='export_data' style='display: none;'><?php echo $serialize_record_arr2; ?></textarea>
+ </form>
+</div>
+
+<!--Category Predictions -->
+
+<div>
+<form method='post' action='downloadCategoryPrediction.php'>
+<table border='1' style='border-collapse:collapse;'>
+<h4>Grouped by Category</h4>
+<tr>
+     <th>Category</th>
+     <th>Predicted Items to be Sold</th>
+    </tr>
+<?php
+//get last 30 days sales ect
+$query3 = "SELECT itemCategory, AVG(saleAmt) as predictedItemSales FROM Items NATURAL JOIN saleLines NATURAL JOIN SaleRecords GROUP BY itemCategory, MONTH(dateTime)";
+
+$results3 = mysqli_query($conn,$query3);
+  $record_arr3 = array();
+     while($row = mysqli_fetch_array($results3)){
+      $cat = $categoryNames[$row['itemCategory'] - 1];
+      $predicted = $row['predictedItemSales'];
+      $record_arr3[] = array($cat,$predicted);
+   ?>
+      <tr>
+       <td><?php echo $cat; ?></td>
+       <td><?php echo $predicted; ?></td>
+      </tr>
+      <?php
+      }
+    mysqli_free_result($results3);
+  ?>
+  </table>
+  <input type='submit' value='Export' name='Export'>
+   <?php
+    $serialize_record_arr3 = serialize($record_arr3);
+   ?>
+  <textarea name='export_data' style='display: none;'><?php echo $serialize_record_arr3; ?></textarea>
+ </form>
+</div>
+
 </body>
 </html>
