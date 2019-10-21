@@ -23,7 +23,7 @@ include("head.php")
             if ($userExists > 0){
                $row = mysqli_fetch_assoc($result);
                $_SESSION["user_id"] = $row["userID"];      
-               header("Location: add_sales.php"); //CHANGE REDIRECT TO REFLECT MAIN HOME PAGE FOR SIGNED IN USER ONCE COMPLETE           
+               header("Location: addSalesOrStock.php"); //CHANGE REDIRECT TO REFLECT MAIN HOME PAGE FOR SIGNED IN USER ONCE COMPLETE           
             }
             else{
                 //Username and/or password wrong so display error in login form

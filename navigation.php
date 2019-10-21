@@ -1,6 +1,6 @@
 <?php
 echo "<header id='navigation'>
-		<img src='images/PHP_SR_Logo.png' alt='Logo'/>
+		<img src=\"images/PHP_SR_Logo.png\" alt='Logo'/>
 		<a href='signout.php'>SIGN-OUT</a>
 		<nav>
 		    <div class='dropdown'>
