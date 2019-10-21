@@ -212,7 +212,7 @@ $results3 = mysqli_query($conn,$query3);
     </tr>
 <?php
 // gets average sales
-$query3 = "SELECT itemName, AVG(saleAmt) as predictedItemSales, saleAmt-stockAmt as toBuy FROM Items NATURAL JOIN saleLines NATURAL JOIN SaleRecords GROUP BY itemName, MONTH(dateTime)";
+$query3 = "SELECT itemName, AVG(saleAmt) as predictedItemSales, saleAmt-stockAmt as toBuy FROM Items NATURAL JOIN SaleLines NATURAL JOIN SaleRecords GROUP BY itemName, MONTH(dateTime)";
 
 $results3 = mysqli_query($conn,$query3);
   $record_arr2 = array();
@@ -254,7 +254,7 @@ $results3 = mysqli_query($conn,$query3);
     </tr>
 <?php
 //get last 30 days sales ect
-$query3 = "SELECT itemCategory, AVG(saleAmt) as predictedItemSales FROM Items NATURAL JOIN saleLines NATURAL JOIN SaleRecords GROUP BY itemCategory, MONTH(dateTime)";
+$query3 = "SELECT itemCategory, AVG(saleAmt) as predictedItemSales FROM Items NATURAL JOIN SaleLines NATURAL JOIN SaleRecords GROUP BY itemCategory, MONTH(dateTime)";
 
 $results3 = mysqli_query($conn,$query3);
   $record_arr3 = array();
