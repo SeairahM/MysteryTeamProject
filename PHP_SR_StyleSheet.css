@@ -116,6 +116,18 @@ div {
 	padding: 7px;
 }
 
+/* error and success divs */
+
+#success {
+	background-color: #82f492;
+	border: 4px solid green;
+}
+
+#error {
+	background-color: #f48282;
+	border: 4px solid red;
+}
+
 /* Text for content styling */
 h1{
 	font: 47px impact, sans-serif;
@@ -144,7 +156,7 @@ input[type=text], select, input[type=password], textarea {
   box-sizing: border-box;
 }
 
-input[type=button]{
+input[type=button], input[type=reset]:hover{
   background-color: #00a651;
   color: white;
   padding: 14px 20px;
@@ -165,7 +177,7 @@ input[type=submit]{
   cursor: pointer;
 }
 
-select:hover, input[type=text]:hover {
+select:hover, input[type=text]:hover,  textarea:hover, input[type=password]:hover {
 background-color: #ccf3da;
 }
 
@@ -176,8 +188,13 @@ border-color: #ffebdf #f9ad81 #f27254 #fac1ac;
 }
 
 
-input[type=submit]:hover, textarea:hover {
+input[type=submit]:hover{
   background-color: #f27254;
+  outline: thick;
+}
+
+input[type=reset]:hover{
+  background-color: red;
   outline: thick;
 }
 
