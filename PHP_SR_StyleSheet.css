@@ -121,7 +121,7 @@ h1{
 	font: 47px impact, sans-serif;
 	color:#f9ad81;
 }
-h2{
+h2, label{
 	font: 36px impact, sans-serif;
 	color:#f26c4f;
 }
@@ -131,6 +131,44 @@ h3{
 }
 h4, p{
 	font: 25px calibri regular, sans-serif;
+}
+
+/* Form Styling */
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  box-sizing: border-box;
+}
+
+input[type=submit] {
+  width: 100%;
+  background-color: #00a651;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+select:hover, input[type=text]:hover {
+background-color: #ccf3da;
+}
+
+select:focus, input[type=text]:focus {
+background-color: #f1fbf5;
+border: 3px solid #555;
+border-color: #ffebdf #f9ad81 #f27254 #fac1ac;
+}
+
+
+input[type=submit]:hover {
+  background-color: #f27254;
+  outline: thick;
 }
 
 /* ---------------------------------------------------------------Footer Styling------------------------------------------------------------------------ */
