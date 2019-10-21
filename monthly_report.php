@@ -34,7 +34,7 @@
   <form id='filterform' method='post' action='monthly_report.php'>
     <label for='repcat'>Category</label>
     <select id='repcat' name='itemCategory'>
-      <option value='na'>No filter</option>
+      <option value='0' id='0'>No filter</option>
       <?php
       //show category dropdown
       $j = 0;
@@ -52,7 +52,7 @@
       $i = 0;
       while ($i < 12) {
         echo "<option value=\"". ($i + 1). "\" id=\"". ($i + 1). "\"";
-        if ($i + 1 == $currentmonth) {
+        if (!isset($_POST["rep_month"]) && $i + 1 == $currentmonth) {
           echo " selected ";
         }
         echo ">". ($i + 1). "</option>";
@@ -79,7 +79,7 @@
       $filtermonth = $_POST["rep_month"];
       $filteryear = $_POST["rep_year"];
 
-      if ($_POST["itemCategory"] != "na") {
+      if ($_POST["itemCategory"] != "0") {
         $filtercat = " AND itemCategory = \"". $_POST["itemCategory"]. "\" ";
         $displayCat = $categoryNames[$_POST["itemCategory"] - 1];
       }
@@ -99,6 +99,9 @@
    ?>
 
  <form method='post' action='download.php'>
+  <input hidden type='text' name='repmonth' value='<?php echo $filtermonth; ?>' />
+  <input hidden type='text' name='repyear' value='<?php echo $filteryear; ?>' />
+  <input hidden type='text' name='repcat' value='<?php if ($filtercat == "") {echo "Nofilter";} else {echo $displayCat;} ?>' />
 
   <table border='1' style='border-collapse:collapse;'>
     <tr>
@@ -107,10 +110,9 @@
      <th>Item Name</th>
      <th>Number of Sales</th>
      <th>Remaining Stock</th>
-     <th>DateTime</th>
     </tr>
     <?php
-     $query2 = "SELECT itemCategory, itemID, itemName, dateTime, stockAmt, COUNT(*) AS counts FROM SaleLines NATURAL JOIN SaleRecords
+     $query2 = "SELECT itemCategory, itemID, itemName, stockAmt, COUNT(*) AS counts FROM SaleLines NATURAL JOIN SaleRecords
      NATURAL JOIN Items WHERE MONTH(dateTime) = ". $filtermonth. " AND YEAR(dateTime) = ". $filteryear. $filtercat. " GROUP BY itemID";
      $results = mysqli_query($conn,$query2);
 
@@ -121,8 +123,7 @@
       $name = $row['itemName'];
       $sAmount = $row['counts'];
       $ItemAmount = $row['stockAmt'];
-      $time = $row['dateTime'];
-      $record_arr[] = array($cat,$id,$name,$sAmount,$ItemAmount,$time);
+      $record_arr[] = array($cat,$id,$name,$sAmount,$ItemAmount);
    ?>
       <tr>
       <td><?php echo $cat; ?></td>
@@ -130,7 +131,6 @@
        <td><?php echo $name; ?></td>
        <td><?php echo $sAmount; ?></td>
        <td><?php echo $ItemAmount?></td>
-       <td><?php echo $time; ?></td>
       </tr>
    <?php
     }

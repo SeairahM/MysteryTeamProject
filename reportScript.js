@@ -4,8 +4,8 @@
    var repMonth = localStorage.getItem("repMonth");
    var repYear = localStorage.getItem("repYear");
 
-   document.getElementById(repCat).selected = true;
-   document.getElementById(repMonth).selected = true;
+   document.getElementById("repmonth").value = repMonth;
+   document.getElementById("repcat").value = repCat;
    document.getElementById("repyear").value = repYear;
  }
 
