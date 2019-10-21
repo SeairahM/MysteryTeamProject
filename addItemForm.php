@@ -10,6 +10,7 @@
 	<?php
 		include("navigation.php");
 	?>
+	<div>
 	<h2>Add Item Page</h2>	
 	<p>Please enter the details of the item you would like to add below:</p>
 	<form action = "addItem.php" method = "post">
@@ -52,7 +53,8 @@
 		<input type="reset" value="Reset" />
 	</fieldset>
 	</form>
-	<footer>
+	</div>
+<footer>
 	<?php
 		include("footer.php");
 	?>
