@@ -1,6 +1,9 @@
 <!DOCTYPE=html>
 <html lang='en'>
 <head>
+  <?php
+    include("head.php");
+  ?>
   <script src="reportScript.js"></script>
 </head>
   <?php
