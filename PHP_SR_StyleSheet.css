@@ -171,6 +171,35 @@ input[type=submit]:hover {
   outline: thick;
 }
 
+/* table formatting */
+table {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table td, #customers th {
+  border: 2px solid white;
+  padding: 8px;
+}
+table td {
+  border-radius: 32px;
+}
+
+table tr:nth-child(even){background-color: #f2f2f2;}
+
+table tr:hover {background-color: #ddd;}
+
+table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  
+  background-image: linear-gradient(to bottom, #f9ad81, #f48067);
+  color: white;
+}
+
 /* ---------------------------------------------------------------Footer Styling------------------------------------------------------------------------ */
 footer p{
 	font: 11px calibri regular, sans-serif;
