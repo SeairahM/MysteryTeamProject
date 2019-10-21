@@ -3,7 +3,6 @@
 <html lang='en'>
 <head>
   <?php include("head.php"); ?>
-   <link rel="stylesheet" href="PHP_SR_StyleSheet.css">
    <script src="add_sales_script.js"></script>
 </head>
 <body>
