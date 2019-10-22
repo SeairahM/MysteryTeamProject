@@ -41,7 +41,7 @@
   //input sales form
   echo "<form action=\"validateSalesOrStock.php\" method=\"POST\" id =\"form_process\">";
   //hidden input of sale lines no
-  echo "<input hidden type=\"text\" name=\"linesnum\" value=\"". $linesnum. "\" />";
+  echo "<input type=\"hidden\" name=\"linesnum\" value=\"". $linesnum. "\" />";
   //iterate over lines of sales
   $i = 0;
   while ($i < $linesnum) {
@@ -75,7 +75,7 @@
 ?>
 <!-- add sales line -->
 <form action="addSalesOrStock.php?newline=y" method="POST" id="button_new_line">
-  <input hidden type="text" name="linesnum" value=<?php echo $linesnum; ?> />
+  <input type="hidden" name="linesnum" value=<?php echo $linesnum; ?> />
   <input type="submit" value="Add new line" />
 </form>
 <!-- reset button -->

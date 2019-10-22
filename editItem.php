@@ -39,7 +39,7 @@
   $row = $result->fetch_assoc();
   ?>
   <form action="processEditItem.php" method="POST">
-    <input type='text' hidden name='itemID' value='<?php echo $_POST["itemID"]; ?>' />
+    <input type='hidden' name='itemID' value='<?php echo $_POST["itemID"]; ?>' />
     <!--text fields for editable columns, with prefilled value-->
     <label for='itemname'>Item Name</label>
     <input type='text' id='itemname' name='itemName' value='<?php echo $row["itemName"]; ?>' /><br />

@@ -10,7 +10,7 @@
     echo "<option value=\"DEBIT\">Debit Card</option>";
     echo "<option value=\"CREDIT\">Credit Card</option>";
   echo "</select>";
-  echo "<input hidden type=\"text\" name=\"totalcost\" value=\"". $total. "\" />";
+  echo "<input type=\"hidden\" name=\"totalcost\" value=\"". $total. "\" />";
 
   //manual datetime
   // echo "<label for=\"datetime\">Date Sold</label>";
@@ -19,5 +19,5 @@
   //automatic datetime
   date_default_timezone_set('Australia/Melbourne');
   $datetime = date('Y-m-d h:i:s', time());
-  echo "<input hidden type=\"text\" name=\"datetime\" value=\"". $datetime. "\" />";
+  echo "<input type=\"hidden\" name=\"datetime\" value=\"". $datetime. "\" />";
 ?>

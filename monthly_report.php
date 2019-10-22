@@ -100,9 +100,9 @@
    ?>
 
  <form method='post' action='download.php'>
-   <input hidden type='text' name='repmonth' value='<?php echo $filtermonth; ?>' />
-   <input hidden type='text' name='repyear' value='<?php echo $filteryear; ?>' />
-   <input hidden type='text' name='repcat' value='<?php if ($filtercat == "") {echo "Nofilter";} else {echo $displayCat;} ?>' />
+   <input type='hidden' name='repmonth' value='<?php echo $filtermonth; ?>' />
+   <input type='hidden' name='repyear' value='<?php echo $filteryear; ?>' />
+   <input type='hidden' name='repcat' value='<?php if ($filtercat == "") {echo "Nofilter";} else {echo $displayCat;} ?>' />
 
   <table border='1' style='border-collapse:collapse;'>
     <tr>

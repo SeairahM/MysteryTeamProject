@@ -20,7 +20,7 @@
   //function to echo edit button
   function echoEditButton($itemID) {
     echo "<form method=\"post\" action=\"editItem.php\">";
-    echo "<input hidden type=\"text\" name=\"itemID\" value=\"". $itemID. "\" />";
+    echo "<input type=\"hidden\" name=\"itemID\" value=\"". $itemID. "\" />";
     echo "<input type=\"submit\" value=\"Edit\" />";
     echo "</form>";
   }
