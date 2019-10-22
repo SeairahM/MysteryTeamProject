@@ -13,6 +13,16 @@
   $currentyear = date('Y');
   ?>
   <?php
+  //function to find category name based on category id
+  function GetCatName($catID, $idArray, $nameArray, $arraySize) {
+    $i = 0;
+    while ($i < $arraySize) {
+      if ($idArray[$i] == $catID) {
+        return $nameArray[$i];
+      }
+      $i += 1;
+    }
+  }
   //save category details into 2 arrays for dropdown in filter report form
   $categoryIDs = array();
   $categoryNames = array();
@@ -44,6 +54,7 @@
         echo ">". $categoryNames[$j]. "</option>";
         $j += 1;
       }
+      $arraySize = $j;
       ?>
     </select>
     <label for='repmonth'>Report for: </label>
@@ -82,7 +93,7 @@
 
       if ($_POST["itemCategory"] != "0") {
         $filtercat = " AND itemCategory = \"". $_POST["itemCategory"]. "\" ";
-        $displayCat = $categoryNames[$_POST["itemCategory"] - 1];
+        $displayCat = GetCatName($_POST["itemCategory"],$categoryIDs,$categoryNames,$arraySize);
       }
       else {
         $filtercat = "";
@@ -119,7 +130,7 @@
 
      $record_arr = array();
      while($row = mysqli_fetch_array($results)){
-      $cat = $categoryNames[$row['itemCategory'] - 1];
+      $cat = GetCatName($row["itemCategory"],$categoryIDs,$categoryNames,$arraySize);
       $id = $row['itemID'];
       $name = $row['itemName'];
       $sAmount = $row['counts'];
